@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block styles %}
+    <link rel="stylesheet" href={% static "bower_components/bootstrap/dist/css/bootstrap.min.css" %}/>
+    <link rel="stylesheet" href={% static "bower_components/bootstrap/dist/css/bootstrap-theme.min.css" %}/>
+{% endblock %}
+
+{% block scripts %}
+    <script src={% static "bower_components/angular/angular.min.js" %}></script>
+    <script src={% static "bower_components/angular-route/angular-route.min.js" %}></script>
+    <script src={% static "js/app/app.js" %}></script>
+    <script src={% static "js/app/router.js" %}></script>
+    <script src={% static "js/app/controllers/catalog.js" %}></script>
+    <script src={% static "js/app/controllers/add.js" %}></script>
+    <script src={% static "js/app/directives/navbar-active.js" %}></script>
+{% endblock %}
+
+{% block content %}
+{% verbatim %}
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav" navbar-active>
+                    <li><a href="#/catalog">Catalog</a></li>
+                    <li><a href="#/add">Add new</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container" ng-view></div>
+{% endverbatim %}
+{% endblock %}
