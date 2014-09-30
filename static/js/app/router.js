@@ -10,6 +10,10 @@ angular.module('main').config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'static/js/app/views/add.html',
           controller: 'AddController'
     })
+    .when('/detail/:animeId', {
+        templateUrl: 'static/js/app/views/detail.html',
+          controller: 'DetailController'
+    })
     .otherwise({
         redirectTo: '/catalog'
     });

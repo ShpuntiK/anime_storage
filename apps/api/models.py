@@ -6,7 +6,7 @@ class Anime(models.Model):
 
     name = models.CharField(max_length=255)
     comment = models.TextField()
-    ratings = models.SmallIntegerField(choices=RATING_CHOICES)
+    rating = models.SmallIntegerField(choices=RATING_CHOICES)
 
     def __unicode__(self):
         return self.name
