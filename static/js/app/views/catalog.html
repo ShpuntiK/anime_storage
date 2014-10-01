@@ -3,7 +3,9 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">{{ anime.name }}
-                    <rating value="{{ anime.rating }}" max-value="5"></rating>
+                    <rating class="text-warning"
+                            ng-model="anime.rating"
+                            readonly="true"></rating>
                     <a ng-href="/#/detail/{{ anime.id }}" class="pull-right"><i class="glyphicon glyphicon-share-alt"></i></a>
                 </h3>
             </div>
