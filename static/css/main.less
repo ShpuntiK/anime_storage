@@ -1,3 +1,4 @@
+@import "../../bower_components/angular-loading-bar/build/loading-bar.min.css";
 @import "../bower_components/bootstrap/less/bootstrap";
 @import "bootswatch";
 @import "variables";
@@ -9,13 +10,25 @@
 }
 
 .ng-invalid.ng-dirty {
-    .has-error .form-control;
+  .has-error .form-control;
 }
 
 label.has-error.control-label {
-    .has-error .control-label;
+  .has-error .control-label;
 }
 
 .btn:focus, .btn:active:focus, .btn.active:focus {
-    outline: none;
+  outline: none;
+}
+
+#loading-bar .bar {
+  background: #18bc9c;
+  height: 5px;
+}
+
+#loading-bar-spinner .spinner-icon {
+  border-top-color:  #18bc9c;
+  border-left-color: #18bc9c;
+  width: 20px;
+  height: 20px;
 }

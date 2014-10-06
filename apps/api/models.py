@@ -5,7 +5,7 @@ class Anime(models.Model):
     RATING_CHOICES = zip(xrange(1, 6), range(1, 6))
 
     name = models.CharField(max_length=255)
-    comment = models.TextField()
+    comment = models.TextField(blank=True)
     rating = models.SmallIntegerField(choices=RATING_CHOICES)
 
     def __unicode__(self):

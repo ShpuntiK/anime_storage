@@ -1,3 +1,5 @@
 .idea/
 *.sqlite3
+*.pyc
+*.css
 static/bower_components/
