@@ -3,14 +3,14 @@
     <input type="text"
            name="name"
            class="form-control"
-           ng-model="anime.name"
+           ng-model="vm.anime.name"
            validator="required">
 </div>
 <div class="form-group">
     <label>Rating</label>
     <select name="rating"
             class="form-control"
-            ng-model="anime.rating"
+            ng-model="vm.anime.rating"
             ng-options="value for value in [] | range:1:6"
             validator="required">
         <option></option>
@@ -21,5 +21,5 @@
     <textarea name="comment"
               class="form-control"
               rows="3"
-              ng-model="anime.comment"></textarea>
+              ng-model="vm.anime.comment"></textarea>
 </div>

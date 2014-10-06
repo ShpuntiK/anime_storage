@@ -1,72 +1,79 @@
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('main').controller('DetailController', [
-    '$scope',
-    '$routeParams',
-    '$location',
-    '$modal',
-    'Anime',
-function (
-    $scope,
-    $routeParams,
-    $location,
-    $modal,
-    Anime
-) {
-    $scope.anime = {};
-    $scope.deleteAnimeModal = null;
+    angular
+        .module('main')
+        .controller('DetailController', DetailController);
 
-    $scope.editForm = {
-        isShown: false,
-        alert: null,
+    DetailController.$inject = [
+        '$routeParams',
+        '$location',
+        '$modal',
+        'Anime'
+    ];
 
-        hideAlert: function() {
-            this.alert = null;
-        },
-        toggle: function () {
-            this.alert = null;
-            this.isShown = !this.isShown;
-        },
-        submit: function () {
-            var self = this;
+    function DetailController($routeParams, $location, $modal, Anime) {
+        var vm = this;
+        vm.anime = {};
+        vm.deleteAnimeModal = null;
+        vm.deleteAnime = deleteAnime;
+        vm.deleteAnimeConfirm = deleteAnimeConfirm;
+        vm.editForm = {
+            isShown: false,
+            alert: null,
 
-            $scope.anime.$update(function (res) {
-                self.alert = {
-                    type: 'success',
-                    msg: 'Anime was updated!'
-                };
+            hideAlert: function () {
+                this.alert = null;
+            },
+            toggle: function () {
+                this.hideAlert();
+                this.isShown = !this.isShown;
+            },
+            submit: function () {
+                var self = this;
+
+                vm.anime.$update(function (res) {
+                    self.alert = {
+                        type: 'success',
+                        msg: 'Anime was updated!'
+                    };
+                }, function (err) {
+                    self.alert = {
+                        type: 'danger',
+                        msg: err.data.detail
+                    };
+                });
+            }
+        };
+
+        getAnime();
+
+        function getAnime() {
+            Anime.get({id: $routeParams.animeId}, function (res) {
+                vm.anime = res;
             }, function (err) {
-                self.alert = {
-                    type: 'danger',
-                    msg: err.data.detail
-                };
+                alert(err.data.detail);
             });
         }
-    };
 
-    Anime.get({id: $routeParams.animeId}, function (res) {
-        $scope.anime = res;
-    }, function (err) {
-        alert(err.data.detail);
-    });
+        function deleteAnime() {
+            vm.deleteAnimeModal = $modal
+                .open({
+                    templateUrl: 'static/js/app/views/modals/delete.html',
+                    controller: 'ModalController',
+                    size: 'sm'
+                })
+                .result.then(function () {
+                    vm.deleteAnimeConfirm();
+                });
+        }
 
-    $scope.deleteAnime = function() {
-        $scope.deleteAnimeModal = $modal
-        .open({
-            templateUrl: 'static/js/app/views/modals/delete.html',
-            controller: 'ModalController',
-            size: 'sm'
-        })
-        .result.then(function (selectedItem) {
-            $scope.deleteAnimeConfirm();
-        });
-    };
-
-    $scope.deleteAnimeConfirm = function () {
-        $scope.anime.$delete(function (res) {
-            $location.path('/catalog');
-        }, function (err) {
-            alert('Can not delete anime: ' + err);
-        });
-    };
-}]);
+        function deleteAnimeConfirm() {
+            vm.anime.$delete(function (res) {
+                $location.path('/catalog');
+            }, function (err) {
+                alert('Cannot delete anime: ' + err);
+            });
+        }
+    }
+})();

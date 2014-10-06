@@ -1,17 +1,21 @@
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('main').controller('ModalController', [
-    '$scope',
-    '$modalInstance',
-function(
-    $scope,
-    $modalInstance
-){
-    $scope.cancel = function(){
-        $modalInstance.dismiss();
-    };
+    angular
+        .module('main')
+        .controller('ModalController', [
+            '$scope',
+            '$modalInstance',
+            ModalController
+        ]);
 
-    $scope.confirm = function(){
-        $modalInstance.close();
-    };
-}]);
+    function ModalController($scope, $modalInstance) {
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
+        };
+
+        $scope.confirm = function () {
+            $modalInstance.close();
+        };
+    }
+})();

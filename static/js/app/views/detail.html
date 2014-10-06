@@ -1,47 +1,47 @@
 <div class="col-md-6">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">{{ anime.name }}
+            <h3 class="panel-title">{{ vm.anime.name }}
                 <rating class="text-warning"
-                        ng-model="anime.rating"
+                        ng-model="vm.anime.rating"
                         readonly="true"></rating>
                 <div class="btn-group pull-right">
                     <button type="button"
                             class="btn btn-primary btn-sm"
-                            ng-click="editForm.toggle()">
+                            ng-click="vm.editForm.toggle()">
                         <span class="glyphicon glyphicon-edit pull-right"></span>
                     </button>
                     <button type="button"
                             class="btn btn-primary btn-sm"
-                            ng-click="deleteAnime()">
+                            ng-click="vm.deleteAnime()">
                         <span class="glyphicon glyphicon-remove pull-right"></span>
                     </button>
                 </div>
             </h3>
         </div>
         <div class="panel-body">
-            <p>Comment: <strong>{{ anime.comment }}</strong></p>
+            <p>Comment: <strong>{{ vm.anime.comment }}</strong></p>
         </div>
     </div>
 
     <form class="well"
           name="animeForm"
           novalidate
-          ng-show="editForm.isShown">
+          ng-show="vm.editForm.isShown">
 
         <div ng-include="'static/js/app/views/anime-form.html'"></div>
 
         <alert close="editForm.hideAlert()"
-               type="{{ editForm.alert.type }}"
-               ng-show="editForm.alert">{{ editForm.alert.msg }}</alert>
+               type="{{ vm.editForm.alert.type }}"
+               ng-show="vm.editForm.alert">{{ vm.editForm.alert.msg }}</alert>
 
         <button type="submit"
                 class="btn btn-default"
                 validation-submit="animeForm"
-                ng-click="editForm.submit()">Edit</button>
+                ng-click="vm.editForm.submit()">Edit</button>
 
         <button type="button"
                 class="btn btn-default"
-                ng-click="editForm.toggle()">Cancel</button>
+                ng-click="vm.editForm.toggle()">Cancel</button>
     </form>
 </div>

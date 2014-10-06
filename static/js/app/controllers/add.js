@@ -1,43 +1,46 @@
-'use strict';
+(function () {
+    'use strict';
 
-//TODO: 1) add validation
-//TODO: 2) add spinner, while data is loading
-angular.module('main').controller('AddController', [
-    '$scope',
-    'Anime',
-function (
-    $scope,
-    Anime
-) {
-    $scope.anime = {};
+    //TODO: 1) add validation
+    //TODO: 2) add tests
+    angular
+        .module('main')
+        .controller('AddController', AddController);
 
-    $scope.addForm = {
-        isShown: false,
-        alert: null,
+    AddController.$inject = [
+        'Anime'
+    ];
 
-        hideAlert: function() {
-            this.alert = null;
-        },
-        toggle: function () {
-            this.alert = null;
-            this.isShown = !this.isShown;
-        },
-        submit: function () {
-            var self = this, newAnime;
+    function AddController(Anime) {
+        var vm = this;
+        vm.anime = {};
+        vm.form = {
+            isShown: false,
+            alert: null,
 
-            newAnime = new Anime($scope.anime);
+            hideAlert: function () {
+                this.alert = null;
+            },
+            toggle: function () {
+                this.alert = null;
+                this.isShown = !this.isShown;
+            },
+            submit: function () {
+                var self = this,
+                    newAnime = new Anime(vm.anime);
 
-            newAnime.$save(function (res) {
-                self.alert = {
-                    type: 'success',
-                    msg: 'New anime was added!'
-                };
-            }, function (err) {
-                self.alert = {
-                    type: 'danger',
-                    msg: err.data.detail
-                };
-            });
-        }
-    };
-}]);
+                newAnime.$save(function (res) {
+                    self.alert = {
+                        type: 'success',
+                        msg: 'New anime was added!'
+                    };
+                }, function (err) {
+                    self.alert = {
+                        type: 'danger',
+                        msg: err.data.detail
+                    };
+                });
+            }
+        };
+    }
+})();
