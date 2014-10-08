@@ -1,0 +1,112 @@
+@import "../../static/bower_components/bootstrap/less/bootstrap";
+@import "boostrap-theme/bootswatch";
+@import "boostrap-theme/variables";
+@import "../../../static/bower_components/angular-loading-bar/build/loading-bar.min.css";
+
+@icon-font-path: "../../../static/bower_components/bootstrap/fonts/";
+
+:focus {
+  outline: none !important;
+}
+
+.ng-invalid.ng-dirty {
+  .has-error .form-control;
+}
+
+label.has-error.control-label {
+  .has-error .control-label;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+  outline: none;
+}
+
+#loading-bar .bar {
+  background: #18bc9c;
+  height: 5px;
+}
+
+#loading-bar-spinner .spinner-icon {
+  border-top-color: #18bc9c;
+  border-left-color: #18bc9c;
+  width: 20px;
+  height: 20px;
+}
+
+.view-frame.ng-enter, .view-frame.ng-leave {
+  background: white;
+  position: absolute;
+  top: 81px;
+  left: 0;
+  right: 0;
+}
+
+.view-frame.ng-enter {
+  -webkit-animation: 0.5s fade-in;
+  -moz-animation: 0.5s fade-in;
+  -o-animation: 0.5s fade-in;
+  animation: 0.5s fade-in;
+  z-index: 100;
+}
+
+.view-frame.ng-leave {
+  -webkit-animation: 0.5s fade-out;
+  -moz-animation: 0.5s fade-out;
+  -o-animation: 0.5s fade-out;
+  animation: 0.5s fade-out;
+  z-index: 99;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

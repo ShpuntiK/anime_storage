@@ -3,3 +3,4 @@
 *.pyc
 *.css
 static/bower_components/
+node_modules/

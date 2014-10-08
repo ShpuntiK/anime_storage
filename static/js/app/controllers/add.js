@@ -3,6 +3,7 @@
 
     //TODO: 1) add validation
     //TODO: 2) add tests
+    //TODO: 3) add animate after loading
     angular
         .module('main')
         .controller('AddController', AddController);

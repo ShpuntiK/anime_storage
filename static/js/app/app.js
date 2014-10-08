@@ -5,6 +5,7 @@
         .module('main', [
             'ngRoute',
             'ngResource',
+            'ngAnimate',
             'validation',
             'validation.rule',
             'ui.bootstrap',

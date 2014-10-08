@@ -3,10 +3,9 @@
 
     angular
         .module('main')
-        .directive('navbarActive', [
-            '$location',
-            navbarActive
-        ]);
+        .directive('navbarActive', navbarActive);
+
+    navbarActive.$inject = ['$location'];
 
     function navbarActive($location) {
         return {
