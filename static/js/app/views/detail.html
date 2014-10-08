@@ -32,7 +32,7 @@
 
             <div ng-include="'static/js/app/views/anime-form.html'"></div>
 
-            <alert close="editForm.hideAlert()"
+            <alert close="vm.editForm.hideAlert()"
                    type="{{ vm.editForm.alert.type }}"
                    ng-show="vm.editForm.alert">{{ vm.editForm.alert.msg }}</alert>
 

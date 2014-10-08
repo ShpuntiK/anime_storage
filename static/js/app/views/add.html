@@ -2,7 +2,7 @@
 
     <div ng-include="'static/js/app/views/anime-form.html'"></div>
 
-    <alert close="addCtrl.form.hideAlert()"
+    <alert close="vm.form.hideAlert()"
            type="{{ vm.form.alert.type }}"
            ng-show="vm.form.alert">{{ vm.form.alert.msg }}</alert>
 
