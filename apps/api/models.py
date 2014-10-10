@@ -14,7 +14,7 @@ class Anime(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
-    anime = models.ManyToManyField(Anime)
+    anime = models.ManyToManyField(Anime, blank=True)
 
     def __unicode__(self):
         return self.name

@@ -9,12 +9,24 @@
             'validation',
             'validation.rule',
             'ui.bootstrap',
-            'angular-loading-bar'
+            'angular-loading-bar',
+            'ngTagsInput'
         ])
-        .config(['$httpProvider', function ($httpProvider) {
-            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+        .config(config);
 
-            $httpProvider.interceptors.push('httpInterceptor');
-        }]);
+    config.$inject = [
+        '$httpProvider',
+        'tagsInputConfigProvider'
+    ];
+
+    function config($httpProvider, tagsInputConfigProvider) {
+        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+
+        $httpProvider.interceptors.push('httpInterceptor');
+
+        tagsInputConfigProvider.setDefaults('tagsInput', {
+            placeholder: ''
+        });
+    }
 })();
