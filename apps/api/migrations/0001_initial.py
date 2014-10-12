@@ -15,8 +15,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255)),
-                ('comment', models.TextField()),
-                ('ratings', models.SmallIntegerField(choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)])),
+                ('comment', models.TextField(blank=True)),
+                ('rating', models.SmallIntegerField(choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)])),
             ],
             options={
             },
@@ -39,11 +39,16 @@ class Migration(migrations.Migration):
             name='Tag',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=255)),
-                ('anime', models.ManyToManyField(to='api.Anime')),
+                ('name', models.SlugField(unique=True, max_length=255)),
             ],
             options={
             },
             bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='anime',
+            name='tags',
+            field=models.ManyToManyField(to='api.Tag'),
+            preserve_default=True,
         ),
     ]

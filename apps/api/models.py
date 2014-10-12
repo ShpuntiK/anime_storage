@@ -1,20 +1,20 @@
 from django.db import models
 
 
+class Tag(models.Model):
+    name = models.SlugField(max_length=255, unique=True)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Anime(models.Model):
     RATING_CHOICES = zip(xrange(1, 6), range(1, 6))
 
     name = models.CharField(max_length=255)
     comment = models.TextField(blank=True)
     rating = models.SmallIntegerField(choices=RATING_CHOICES)
-
-    def __unicode__(self):
-        return self.name
-
-
-class Tag(models.Model):
-    name = models.CharField(max_length=255)
-    anime = models.ManyToManyField(Anime, blank=True)
+    tags = models.ManyToManyField(Tag)
 
     def __unicode__(self):
         return self.name

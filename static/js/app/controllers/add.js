@@ -9,66 +9,44 @@
         .controller('AddController', AddController);
 
     AddController.$inject = [
-        '$q',
-        '$filter',
         'Anime',
         'Tag'
     ];
 
-    function AddController($q, $filter, Anime, Tag) {
+    function AddController(Anime, Tag) {
         var vm = this;
+        vm.existedTags = Tag.resource.query();
         vm.anime = {};
-        vm.existedTags = [];
-        vm.tags = [];
+        vm.alert = null;
+        vm.addAnime = addAnime;
+        vm.hideAlert = hideAlert;
         vm.filterTags = filterTags;
-        vm.form = {
-            isShown: false,
-            alert: null,
 
-            hideAlert: function () {
-                this.alert = null;
-            },
-            toggle: function () {
-                this.alert = null;
-                this.isShown = !this.isShown;
-            },
-            submit: function () {
-                var self = this,
-                    newAnime = new Anime(vm.anime);
+        function hideAlert(){
+            vm.alert = null;
+        }
 
-                newAnime.$save(function (res) {
-                    self.alert = {
-                        type: 'success',
-                        msg: 'New anime was added!'
-                    };
-                }, function (err) {
-                    self.alert = {
-                        type: 'danger',
-                        msg: err.data.detail
-                    };
-                });
-            }
-        };
+        function addAnime() {
+            var newAnime = new Anime(vm.anime);
 
-        getTags();
+            newAnime.$save(function (res) {
+                vm.anime = {};
+                vm.existedTags = Tag.resource.query();
 
-        function getTags() {
-            Tag.query(function (res) {
-                vm.existedTags = res.map(function (tag, index) {
-                    return tag.name;
-                });
+                vm.alert = {
+                    type: 'success',
+                    msg: 'New anime was added!'
+                };
             }, function (err) {
-                alert(err.data.detail);
+                vm.alert = {
+                    type: 'danger',
+                    msg: err.data.detail
+                };
             });
         }
 
         function filterTags(query) {
-            var deferred = $q.defer(),
-                filteredTags = $filter('filter')(vm.existedTags, query);
-
-            deferred.resolve(filteredTags);
-
-            return deferred.promise;
+            return Tag.autocomplete(vm.existedTags, query);
         }
     }
 })();

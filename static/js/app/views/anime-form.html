@@ -26,7 +26,8 @@
 <div class="form-group">
     <label>Tags</label>
     <tags-input name="tags"
-                ng-model="vm.tags">
+                ng-model="vm.anime.tags"
+                display-property="name">
         <auto-complete source="vm.filterTags($query)"></auto-complete>
     </tags-input>
 </div>
