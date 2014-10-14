@@ -8,13 +8,10 @@
 </div>
 <div class="form-group">
     <label>Rating</label>
-    <select name="rating"
-            class="form-control"
-            ng-model="vm.anime.rating"
-            ng-options="value for value in [] | range:1:6"
-            validator="required">
-        <option></option>
-    </select>
+    <div class="rating-container">
+        <rating class="text-warning"
+                ng-model="vm.anime.rating"></rating>
+    </div>
 </div>
 <div class="form-group">
     <label>Comment</label>

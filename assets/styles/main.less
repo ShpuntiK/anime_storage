@@ -3,7 +3,6 @@
 @import "boostrap-theme/variables";
 @import "../../../static/bower_components/angular-loading-bar/build/loading-bar.css";
 @import "../../../static/bower_components/ng-tags-input/ng-tags-input.css";
-@import "../../../static/bower_components/ng-tags-input/ng-tags-input.bootstrap.css";
 
 @icon-font-path: "../../../static/bower_components/bootstrap/fonts/";
 
@@ -23,6 +22,10 @@ label.has-error.control-label {
   outline: none;
 }
 
+textarea {
+  resize: vertical;
+}
+
 #loading-bar .bar {
   background: #18bc9c;
   height: 5px;
@@ -33,4 +36,66 @@ label.has-error.control-label {
   border-left-color: #18bc9c;
   width: 20px;
   height: 20px;
+}
+
+.rating-container {
+  font-size: 22px;
+}
+
+tags-input {
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  .tags {
+    .form-control;
+
+    font-size: 24px;
+    padding: 2px;
+    height: 100%;
+
+    .tag-item {
+      .label;
+      .label-info;
+
+      background: @brand-info;
+      height: auto;
+      border: none;
+      line-height: 25px;
+      margin: 2px;
+
+      .remove-button {
+        color: #fff;
+
+        &:active {
+          color: @gray;
+        }
+      }
+    }
+
+    .tag-item.selected {
+      background: @brand-warning;
+      color: #fff;
+      border: none;
+    }
+
+    .input {
+      font-size: 18px;
+      margin: 4px;
+      width: 6px;
+    }
+
+    .input.invalid-tag {
+      color: @brand-danger;
+    }
+  }
+
+  .tags.focused {
+    border: 2px solid @brand-primary;
+    box-shadow: none;
+  }
+}
+
+tags-input.ng-invalid {
+  .tags {
+    box-shadow: none;
+  }
 }
