@@ -9,48 +9,61 @@
         '$routeParams',
         '$location',
         '$modal',
-        'Anime'
+        'Anime',
+        'Tag'
     ];
 
-    function DetailController($routeParams, $location, $modal, Anime) {
-        var vm = this;
+    //TODO: tags order
+    function DetailController($routeParams, $location, $modal, Anime, Tag) {
+        var vm = this,
+            savedAnime = {};
+
+        vm.existedTags = Tag.resource.query();
         vm.anime = {};
         vm.deleteAnimeModal = null;
+        vm.alert = null;
+        vm.editAnime = editAnime;
         vm.deleteAnime = deleteAnime;
         vm.deleteAnimeConfirm = deleteAnimeConfirm;
-        vm.editForm = {
-            isShown: false,
-            alert: null,
-
-            hideAlert: function () {
-                this.alert = null;
-            },
-            toggle: function () {
-                this.hideAlert();
-                this.isShown = !this.isShown;
-            },
-            submit: function () {
-                var self = this;
-
-                vm.anime.$update(function (res) {
-                    self.alert = {
-                        type: 'success',
-                        msg: 'Anime was updated!'
-                    };
-                }, function (err) {
-                    self.alert = {
-                        type: 'danger',
-                        msg: err.data.detail
-                    };
-                });
-            }
-        };
+        vm.filterTags = filterTags;
+        vm.hideAlert = hideAlert;
+        vm.toggleForm = toggleForm;
 
         getAnime();
 
+        function hideAlert() {
+            vm.alert = null;
+        }
+
+        function toggleForm() {
+            vm.hideAlert();
+            vm.formIsShown = !vm.formIsShown;
+            vm.anime = angular.copy(savedAnime);
+        }
+
+        function filterTags(query) {
+            return Tag.autocomplete(vm.existedTags, query);
+        }
+
+        function editAnime() {
+            vm.anime.$update(function (anime) {
+                savedAnime = angular.copy(anime);
+                vm.alert = {
+                    type: 'success',
+                    msg: 'Anime was updated!'
+                };
+            }, function (err) {
+                vm.alert = {
+                    type: 'danger',
+                    msg: err.data.detail
+                };
+            });
+        }
+
         function getAnime() {
-            Anime.get({id: $routeParams.animeId}, function (res) {
-                vm.anime = res;
+            Anime.get({id: $routeParams.animeId}, function (anime) {
+                vm.anime = anime;
+                savedAnime = angular.copy(anime);
             }, function (err) {
                 alert(err.data.detail);
             });
