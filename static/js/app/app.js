@@ -6,8 +6,6 @@
             'ngRoute',
             'ngResource',
             'ngAnimate',
-            'validation',
-            'validation.rule',
             'ui.bootstrap',
             'angular-loading-bar',
             'ngTagsInput'
