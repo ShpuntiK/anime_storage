@@ -81,5 +81,4 @@
             });
         }
     }
-    DetailController.$inject = ['$routeParams', '$location', '$modal', 'Anime', 'Tag'];
 })();

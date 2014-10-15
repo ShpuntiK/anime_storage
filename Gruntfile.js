@@ -4,8 +4,8 @@ module.exports = function (grunt) {
 
         watch: {
             styles: {
-                files: ['assets/styles/**/*.less'],
-                tasks: ['less']
+                files: ['./assets/**/*.js', './assets/**/*.less'],
+                tasks: ['less', 'copy', 'ngAnnotate']
             }
         },
 
@@ -20,10 +20,32 @@ module.exports = function (grunt) {
                 dest: './static/css',
                 ext: '.css'
             }
-        }
+        },
 
+        copy: {
+            files: {
+                expand: true,
+                cwd: './assets/app/views',
+                src: '*',
+                dest: './static/js/app/views'
+            }
+        },
+
+        ngAnnotate: {
+            options: {
+                singleQuotes: true
+            },
+            files: {
+                expand: true,
+                cwd: './assets/app',
+                src: ['**/*.js'],
+                dest: './static/js/app'
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-ng-annotate');
 };

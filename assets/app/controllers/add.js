@@ -44,5 +44,4 @@
             return Tag.autocomplete(vm.existedTags, query);
         }
     }
-    AddController.$inject = ['Anime', 'Tag'];
 })();

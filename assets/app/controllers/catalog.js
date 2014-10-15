@@ -32,5 +32,4 @@
             return splittedArray;
         }
     }
-    CatalogController.$inject = ['Anime'];
 })();

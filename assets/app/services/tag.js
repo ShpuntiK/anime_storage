@@ -19,5 +19,4 @@
 
         return this;
     }
-    Tag.$inject = ['$resource', '$q', '$filter'];
 })();

@@ -23,5 +23,4 @@
             }
         };
     }
-    httpInterceptor.$inject = ['$q'];
 })();

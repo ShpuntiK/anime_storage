@@ -22,5 +22,4 @@
             placeholder: ''
         });
     }
-    config.$inject = ['$httpProvider', 'tagsInputConfigProvider'];
 })();

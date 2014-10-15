@@ -26,5 +26,4 @@
                 redirectTo: '/catalog'
             });
     }
-    router.$inject = ['$routeProvider'];
 })();

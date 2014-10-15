@@ -14,5 +14,4 @@
             $modalInstance.close();
         };
     }
-    ModalController.$inject = ['$scope', '$modalInstance'];
 })();

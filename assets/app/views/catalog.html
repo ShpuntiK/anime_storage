@@ -1,0 +1,17 @@
+<div class="row" ng-repeat="row in vm.animeRows">
+    <div class="col-md-4" ng-repeat="anime in row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ anime.name }}
+                    <rating class="text-warning"
+                            ng-model="anime.rating"
+                            readonly="true"></rating>
+                    <a ng-href="/#/detail/{{ anime.id }}" class="pull-right"><i class="glyphicon glyphicon-share-alt"></i></a>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <p>Comment: <strong>{{ anime.comment }}</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
