@@ -3,10 +3,12 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
-            styles: {
-                files: ['./assets/**/*.js', './assets/**/*.less'],
-                tasks: ['less', 'copy', 'ngAnnotate']
-            }
+            files: ['./assets/**/*.js', './assets/**/*.less'],
+            tasks: ['less', 'copy', 'ngAnnotate']
+        },
+
+        jshint: {
+            files: ['./assets/app/**/*.js']
         },
 
         less: {
@@ -31,6 +33,14 @@ module.exports = function (grunt) {
             }
         },
 
+        karma: {
+            unit: {
+                options: {
+                    configFile: 'karma.conf.js'
+                }
+            }
+        },
+
         ngAnnotate: {
             options: {
                 singleQuotes: true
@@ -45,7 +55,11 @@ module.exports = function (grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ng-annotate');
+
+    grunt.registerTask('build', ['less', 'jshint', 'karma', 'ngAnnotate', 'copy']);
 };
