@@ -7,16 +7,13 @@
 
     function CatalogController(Anime) {
         var vm = this;
-        vm.animes = [];
         vm.animeRows = [];
 
         getAnimes();
 
         function getAnimes() {
             Anime.query(function (res) {
-                var animes = res;
-
-                vm.animeRows = splitArrayOnParts(animes, 3);
+                vm.animeRows = splitArrayOnParts(res, 3);
             }, function (err) {
                 alert(err.data.detail);
             });
