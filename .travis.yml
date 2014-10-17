@@ -3,4 +3,5 @@ node_js:
   - "0.10"
 
 before_install:
+  - npm i -g bower
   - npm i -g grunt-cli
