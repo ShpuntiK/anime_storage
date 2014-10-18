@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controllers', function () {
+describe('controllers', function () {
 
     beforeEach(function () {
         jasmine.addMatchers({

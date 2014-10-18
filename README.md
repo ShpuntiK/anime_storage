@@ -4,4 +4,4 @@ Anime Storage
 
 Storage for anime and relative information like manga and links.
 
-Project base on Django Rest Framework and AngularJS.
+Project based on Django Rest Framework and AngularJS.
