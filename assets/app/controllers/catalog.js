@@ -5,7 +5,7 @@
         .module('main')
         .controller('CatalogController', CatalogController);
 
-    function CatalogController(Anime) {
+    function CatalogController($log, Anime) {
         var vm = this;
         vm.animeRows = [];
 
@@ -15,7 +15,7 @@
             Anime.query(function (res) {
                 vm.animeRows = splitArrayOnParts(res, 3);
             }, function (err) {
-                alert(err.data.detail);
+                $log.error(err);
             });
         }
 

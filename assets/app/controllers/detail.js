@@ -6,7 +6,7 @@
         .controller('DetailController', DetailController);
 
     //TODO: tags order
-    function DetailController($routeParams, $location, $modal, Anime, Tag) {
+    function DetailController($routeParams, $location, $modal, $log, Anime, Tag) {
         var vm = this,
             savedAnime = {};
 
@@ -57,7 +57,7 @@
                 vm.anime = anime;
                 savedAnime = angular.copy(anime);
             }, function (err) {
-                alert(err.data.detail);
+                $log.error(err);
             });
         }
 
@@ -66,6 +66,7 @@
                 .open({
                     templateUrl: 'static/js/app/views/modals/delete.html',
                     controller: 'ModalController',
+                    controllerAs: 'vm',
                     size: 'sm'
                 })
                 .result.then(function () {
@@ -77,7 +78,7 @@
             vm.anime.$delete(function (res) {
                 $location.path('/catalog');
             }, function (err) {
-                alert('Cannot delete anime: ' + err);
+                $log.error(err);
             });
         }
     }

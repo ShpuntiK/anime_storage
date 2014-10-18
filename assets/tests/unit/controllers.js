@@ -1,226 +1,441 @@
-'use strict';
+(function () {
+    'use strict';
 
-describe('controllers', function () {
+    describe('controllers', function () {
 
-    beforeEach(function () {
-        jasmine.addMatchers({
-            toEqualData: function () {
-                return {
-                    compare: function (actual, expected) {
-                        return {
-                            pass: angular.equals(actual, expected)
-                        };
-                    }
-                };
-            }
-        });
-    });
-
-    beforeEach(module('main'));
-
-    describe('AddController', function () {
-        var ctrl, $httpBackend;
-
-        beforeEach(inject(function (_$httpBackend_, $controller) {
-            $httpBackend = _$httpBackend_;
-            $httpBackend
-                .whenGET('api/tag')
-                .respond([
-                    {name: 'tag1'},
-                    {name: 'tag2'}
-                ]);
-
-            ctrl = $controller('AddController');
-        }));
-
-        it('work', function () {
-            expect(ctrl).toBeDefined();
+        beforeEach(function () {
+            jasmine.addMatchers({
+                toEqualData: function () {
+                    return {
+                        compare: function (actual, expected) {
+                            return {
+                                pass: angular.equals(actual, expected)
+                            };
+                        }
+                    };
+                }
+            });
         });
 
-        it('hideAlert', function () {
-            expect(ctrl.alert).toBeNull();
+        beforeEach(module('main'));
 
-            ctrl.alert = 'test data';
-            expect(ctrl.alert).not.toBeNull();
+        describe('AddController', function () {
+            var ctrl, $httpBackend;
 
-            ctrl.hideAlert();
-            expect(ctrl.alert).toBeNull();
-        });
+            beforeEach(inject(function (_$httpBackend_, $controller) {
+                $httpBackend = _$httpBackend_;
+                $httpBackend
+                    .whenGET('api/tag')
+                    .respond([
+                        {name: 'tag1'},
+                        {name: 'tag2'}
+                    ]);
 
-        describe('addAnime', function () {
+                ctrl = $controller('AddController');
+            }));
 
-            beforeEach(function () {
-                expect(ctrl.anime).toEqual({});
+            it('work', function () {
+                expect(ctrl).toBeDefined();
+            });
+
+            it('hideAlert', function () {
+                expect(ctrl.alert).toBeNull();
+
+                ctrl.alert = 'test data';
+                expect(ctrl.alert).not.toBeNull();
+
+                ctrl.hideAlert();
                 expect(ctrl.alert).toBeNull();
             });
 
-            it('success response', function () {
-                var expectedResult = {
-                    name: 'test name',
-                    rating: 5
-                };
+            describe('addAnime', function () {
 
-                ctrl.anime = expectedResult;
-                ctrl.addAnime();
+                beforeEach(function () {
+                    expect(ctrl.anime).toEqual({});
+                    expect(ctrl.alert).toBeNull();
+                });
 
-                $httpBackend
-                    .expectPOST('api/anime', expectedResult)
-                    .respond(201, expectedResult);
+                it('success response', function () {
+                    var expectedResult = {
+                        name: 'test name',
+                        rating: 5
+                    };
 
-                expect(ctrl.anime).toEqual(expectedResult);
+                    ctrl.anime = expectedResult;
+                    ctrl.addAnime();
 
-                $httpBackend.flush();
+                    $httpBackend
+                        .expectPOST('api/anime', expectedResult)
+                        .respond(201, expectedResult);
 
-                expect(ctrl.anime).toEqual({});
-                expect(ctrl.alert).not.toBeNull();
-                expect(ctrl.alert.type).toEqual('success');
+                    expect(ctrl.anime).toEqual(expectedResult);
+
+                    $httpBackend.flush();
+
+                    expect(ctrl.anime).toEqual({});
+                    expect(ctrl.alert).not.toBeNull();
+                    expect(ctrl.alert.type).toEqual('success');
+                });
+
+                it('error response', function () {
+                    ctrl.addAnime();
+
+                    $httpBackend
+                        .expectPOST('api/anime')
+                        .respond(400, {detail: 'fail'});
+
+                    $httpBackend.flush();
+
+                    expect(ctrl.anime).toEqual({});
+                    expect(ctrl.alert).not.toBeNull();
+                    expect(ctrl.alert.type).toEqual('danger');
+                });
+
             });
 
-            it('error response', function () {
-                ctrl.addAnime();
+            it('existedTags', function () {
+                expect(ctrl.existedTags).toEqual([]);
 
-                $httpBackend
-                    .expectPOST('api/anime')
-                    .respond(400, {detail: 'fail'});
-
-                $httpBackend.flush();
-
-                expect(ctrl.anime).toEqual({});
-                expect(ctrl.alert).not.toBeNull();
-                expect(ctrl.alert.type).toEqual('danger');
-            });
-
-        });
-
-        it('existedTags', function () {
-            expect(ctrl.existedTags).toEqual([]);
-
-            $httpBackend.flush();
-
-            expect(ctrl.existedTags.length).toBeGreaterThan(0);
-        });
-
-        describe('filterTags', function () {
-
-            beforeEach(function () {
                 $httpBackend.flush();
 
                 expect(ctrl.existedTags.length).toBeGreaterThan(0);
             });
 
-            it('with empty query', function () {
-                var filteredTags = ctrl.filterTags('nothing');
+            describe('filterTags', function () {
 
-                expect(filteredTags.$$state.value).toEqualData([]);
+                beforeEach(function () {
+                    $httpBackend.flush();
+
+                    expect(ctrl.existedTags.length).toBeGreaterThan(0);
+                });
+
+                it('with empty query', function () {
+                    var filteredTags = ctrl.filterTags('nothing');
+
+                    expect(filteredTags.$$state.value).toEqualData([]);
+                });
+
+                it('with not existing tags', function () {
+                    var filteredTags = ctrl.filterTags('nothing');
+
+                    expect(filteredTags.$$state.value).toEqualData([]);
+                });
+
+                it('with existing tags', function () {
+                    var expectedResult = [
+                        {name: 'tag1'},
+                        {name: 'tag2'}
+                    ];
+
+                    var filteredTags = ctrl.filterTags('tag');
+
+                    expect(filteredTags.$$state.value).toEqualData(expectedResult);
+                });
+
+            });
+        });
+
+        describe('CatalogController', function () {
+            var ctrl, $httpBackend;
+
+            beforeEach(inject(function (_$httpBackend_, $controller) {
+                $httpBackend = _$httpBackend_;
+                ctrl = $controller('CatalogController');
+            }));
+
+            it('work', function () {
+                expect(ctrl).toBeDefined();
             });
 
-            it('with not existing tags', function () {
-                var filteredTags = ctrl.filterTags('nothing');
+            describe('getAnimes', function () {
 
-                expect(filteredTags.$$state.value).toEqualData([]);
+                beforeEach(function () {
+                    expect(ctrl.animeRows).toEqual([]);
+                });
+
+                it('with empty array', function () {
+                    $httpBackend
+                        .expectGET('api/anime')
+                        .respond([]);
+
+                    $httpBackend.flush();
+
+                    expect(ctrl.animeRows).toEqual([]);
+                });
+
+                it('with one element', function () {
+                    var expectedResult = [
+                        {name: 'anime1'}
+                    ];
+
+                    $httpBackend
+                        .expectGET('api/anime')
+                        .respond(expectedResult);
+
+                    $httpBackend.flush();
+
+                    expect(ctrl.animeRows).toEqualData([expectedResult]);
+                });
+
+                it('with three elements', function () {
+                    var expectedResult = [
+                        {name: 'anime1'},
+                        {name: 'anime2'},
+                        {name: 'anime3'}
+                    ];
+
+                    $httpBackend
+                        .expectGET('api/anime')
+                        .respond(expectedResult);
+
+                    $httpBackend.flush();
+
+                    expect(ctrl.animeRows).toEqualData([expectedResult]);
+                });
+
+                it('with five elements', function () {
+                    var expectedResult = [
+                        {name: 'anime1'},
+                        {name: 'anime2'},
+                        {name: 'anime3'},
+                        {name: 'anime4'},
+                        {name: 'anime5'}
+                    ];
+
+                    $httpBackend
+                        .expectGET('api/anime')
+                        .respond(expectedResult);
+
+                    $httpBackend.flush();
+
+                    expect(ctrl.animeRows).toEqualData([
+                        [
+                            expectedResult[0],
+                            expectedResult[1],
+                            expectedResult[2]
+                        ],
+                        [
+                            expectedResult[3],
+                            expectedResult[4]
+                        ]
+                    ]);
+                });
+
+            });
+        });
+
+        describe('DetailController', function () {
+            var animeFromResponse = {name: 'test', rating: 5},
+                ctrl, $httpBackend, $location;
+
+            beforeEach(inject(function (_$httpBackend_, _$location_, $controller) {
+                $httpBackend = _$httpBackend_;
+
+                $httpBackend
+                    .whenGET('api/anime')
+                    .respond(animeFromResponse);
+
+                $httpBackend
+                    .whenGET('api/tag')
+                    .respond([
+                        {name: 'tag1'},
+                        {name: 'tag2'}
+                    ]);
+
+                $location = _$location_;
+
+                ctrl = $controller('DetailController');
+            }));
+
+            it('work', function () {
+                expect(ctrl).toBeDefined();
             });
 
-            it('with existing tags', function () {
-                var expectedResult = [
-                    {name: 'tag1'},
-                    {name: 'tag2'}
-                ];
+            it('hideAlert', function () {
+                expect(ctrl.alert).toBeNull();
 
-                var filteredTags = ctrl.filterTags('tag');
+                ctrl.alert = 'test data';
+                expect(ctrl.alert).not.toBeNull();
 
-                expect(filteredTags.$$state.value).toEqualData(expectedResult);
+                ctrl.hideAlert();
+                expect(ctrl.alert).toBeNull();
+            });
+
+            it('toggleForm', function () {
+                $httpBackend.flush();
+
+                ctrl.alert = 'test data';
+
+                expect(ctrl.alert).not.toBeNull();
+                expect(ctrl.formIsShown).toBeFalsy();
+                expect(ctrl.anime).toEqualData(animeFromResponse);
+
+                ctrl.anime = {
+                    name: 'new name',
+                    rating: 1
+                };
+
+                ctrl.toggleForm();
+
+                expect(ctrl.alert).toBeNull();
+                expect(ctrl.formIsShown).toBeTruthy();
+                expect(ctrl.anime).toEqualData(animeFromResponse);
+            });
+
+            describe('editAnime', function () {
+                var expectedResult = {
+                    name: 'new name',
+                    rating: 1
+                };
+
+                beforeEach(function () {
+                    $httpBackend.flush();
+
+                    expect(ctrl.anime).toEqualData(animeFromResponse);
+                    expect(ctrl.alert).toBeNull();
+
+                    ctrl.anime.name = expectedResult.name;
+                    ctrl.anime.rating = expectedResult.rating;
+                });
+
+                it('success response', function () {
+                    $httpBackend
+                        .expectPUT('api/anime', expectedResult)
+                        .respond(200, expectedResult);
+
+                    ctrl.editAnime();
+
+                    expect(ctrl.anime).toEqualData(expectedResult);
+
+                    $httpBackend.flush();
+
+                    expect(ctrl.anime).toEqualData(expectedResult);
+                    expect(ctrl.alert).not.toBeNull();
+                    expect(ctrl.alert.type).toEqual('success');
+                });
+
+                it('error response', function () {
+                    $httpBackend
+                        .expectPUT('api/anime', expectedResult)
+                        .respond(400, {detail: 'fail'});
+
+                    ctrl.editAnime();
+
+                    expect(ctrl.anime).toEqualData(expectedResult);
+
+                    $httpBackend.flush();
+
+                    expect(ctrl.anime).toEqualData(expectedResult);
+                    expect(ctrl.alert).not.toBeNull();
+                    expect(ctrl.alert.type).toEqual('danger');
+                });
+
+            });
+
+            it('deleteAnime', function () {
+                expect(ctrl.deleteAnimeModal).toBeNull();
+
+                ctrl.deleteAnime();
+
+                expect(ctrl.deleteAnime).not.toBeNull();
+            });
+
+            describe('deleteAnimeConfirm', function () {
+                beforeEach(function () {
+                    $httpBackend.flush();
+
+                    expect(ctrl.anime).toEqualData(animeFromResponse);
+                });
+
+                it('success response', function () {
+                    $httpBackend
+                        .expectDELETE('api/anime')
+                        .respond(200);
+
+                    ctrl.deleteAnimeConfirm();
+
+                    $httpBackend.flush();
+
+                    expect($location.path()).toEqual('/catalog');
+                });
+
+                it('error response', function () {
+                    $httpBackend
+                        .expectDELETE('api/anime')
+                        .respond(500, {detail: 'fail'});
+
+                    ctrl.deleteAnimeConfirm();
+
+                    $httpBackend.flush();
+
+                    expect($location.path()).not.toEqual('/catalog');
+                });
+
+            });
+
+            describe('filterTags', function () {
+
+                beforeEach(function () {
+                    $httpBackend.flush();
+
+                    expect(ctrl.existedTags.length).toBeGreaterThan(0);
+                });
+
+                it('with empty query', function () {
+                    var filteredTags = ctrl.filterTags('nothing');
+
+                    expect(filteredTags.$$state.value).toEqualData([]);
+                });
+
+                it('with not existing tags', function () {
+                    var filteredTags = ctrl.filterTags('nothing');
+
+                    expect(filteredTags.$$state.value).toEqualData([]);
+                });
+
+                it('with existing tags', function () {
+                    var expectedResult = [
+                        {name: 'tag1'},
+                        {name: 'tag2'}
+                    ];
+
+                    var filteredTags = ctrl.filterTags('tag');
+
+                    expect(filteredTags.$$state.value).toEqualData(expectedResult);
+                });
+
             });
 
         });
+
+        describe('ModalController', function () {
+            var ctrl, modalInstance;
+
+            beforeEach(inject(function ($controller) {
+                modalInstance = jasmine.createSpyObj('modalInstance', ['close', 'dismiss']);
+
+                ctrl = $controller('ModalController', {
+                    $modalInstance: modalInstance
+                });
+            }));
+
+            it('work', function () {
+                expect(ctrl).toBeDefined();
+            });
+
+            it('dismiss', function () {
+                ctrl.cancel();
+
+                expect(modalInstance.dismiss).toHaveBeenCalled();
+            });
+
+            it('confirm', function () {
+                ctrl.confirm();
+
+                expect(modalInstance.close).toHaveBeenCalled();
+            });
+
+        });
+
     });
-
-    describe('CatalogController', function () {
-        var ctrl, $httpBackend;
-
-        beforeEach(inject(function (_$httpBackend_, $controller) {
-            $httpBackend = _$httpBackend_;
-            ctrl = $controller('CatalogController');
-        }));
-
-        it('work', function () {
-            expect(ctrl).toBeDefined();
-        });
-
-        describe('getAnimes', function () {
-
-            beforeEach(function () {
-                expect(ctrl.animeRows).toEqual([]);
-            });
-
-            it('with empty array', function () {
-                $httpBackend
-                    .expectGET('api/anime')
-                    .respond([]);
-
-                $httpBackend.flush();
-
-                expect(ctrl.animeRows).toEqual([]);
-            });
-
-            it('with one element', function () {
-                var expectedResult = [
-                    {name: 'anime1'}
-                ];
-
-                $httpBackend
-                    .expectGET('api/anime')
-                    .respond(expectedResult);
-
-                $httpBackend.flush();
-
-                expect(ctrl.animeRows).toEqualData([expectedResult]);
-            });
-
-            it('with three elements', function () {
-                var expectedResult = [
-                    {name: 'anime1'},
-                    {name: 'anime2'},
-                    {name: 'anime3'}
-                ];
-
-                $httpBackend
-                    .expectGET('api/anime')
-                    .respond(expectedResult);
-
-                $httpBackend.flush();
-
-                expect(ctrl.animeRows).toEqualData([expectedResult]);
-            });
-
-            it('with five elements', function () {
-                var expectedResult = [
-                    {name: 'anime1'},
-                    {name: 'anime2'},
-                    {name: 'anime3'},
-                    {name: 'anime4'},
-                    {name: 'anime5'},
-                ];
-
-                $httpBackend
-                    .expectGET('api/anime')
-                    .respond(expectedResult);
-
-                $httpBackend.flush();
-
-                expect(ctrl.animeRows).toEqualData([
-                    [
-                        expectedResult[0],
-                        expectedResult[1],
-                        expectedResult[2]
-                    ],
-                    [
-                        expectedResult[3],
-                        expectedResult[4]
-                    ]
-                ]);
-            });
-
-        });
-    });
-
-});
+})();

@@ -8,7 +8,13 @@ module.exports = function (grunt) {
         },
 
         jshint: {
-            files: ['./assets/app/**/*.js']
+            options:{
+                jshintrc: '.jshintrc'
+            },
+            files: [
+                './assets/app/**/*.js',
+                './assets/tests/unit/**/*.js'
+            ]
         },
 
         less: {
@@ -28,7 +34,7 @@ module.exports = function (grunt) {
             files: {
                 expand: true,
                 cwd: './assets/app/views',
-                src: '*',
+                src: '**/*',
                 dest: './static/js/app/views'
             }
         },

@@ -5,12 +5,14 @@
         .module('main')
         .controller('ModalController', ModalController);
 
-    function ModalController($scope, $modalInstance) {
-        $scope.cancel = function () {
+    function ModalController($modalInstance) {
+        var vm = this;
+
+        vm.cancel = function () {
             $modalInstance.dismiss();
         };
 
-        $scope.confirm = function () {
+        vm.confirm = function () {
             $modalInstance.close();
         };
     }
