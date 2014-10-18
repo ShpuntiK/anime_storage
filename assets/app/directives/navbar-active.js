@@ -14,7 +14,7 @@
                 }, function (value) {
                     var regexp = new RegExp('^' + value + '$');
 
-                    angular.forEach(element.children(), function (li) {
+                    [].forEach.call(element.children(), function (li) {
                         var link = li.lastChild.hash.replace('#', ''),
                             isMatched = regexp.test(link);
 
