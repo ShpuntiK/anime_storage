@@ -3,7 +3,7 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
-            files: ['./assets/**/*.js', './assets/**/*.less'],
+            files: ['./assets/app/**/*', './assets/styles/**/*'],
             tasks: ['less', 'copy', 'ngAnnotate']
         },
 

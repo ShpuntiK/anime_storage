@@ -10,7 +10,12 @@
                 </h3>
             </div>
             <div class="panel-body">
-                <p>Comment: <strong>{{ anime.comment }}</strong></p>
+                <p>
+                    <strong>Comment:</strong> {{ anime.comment }}
+                </p>
+                <p ng-repeat="link in anime.links">
+                    <strong>{{ link.name }}:</strong> {{ link.url }}
+                </p>
             </div>
         </div>
     </div>

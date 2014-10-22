@@ -42,6 +42,30 @@ textarea {
   font-size: 22px;
 }
 
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group-last {
+  margin-bottom: 0;
+}
+
+.links-mini-form {
+  .input-top {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .input-bottom {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  button {
+    border-top-right-radius: 0;
+  }
+}
+
 tags-input {
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -67,6 +91,10 @@ tags-input {
 
         &:active {
           color: @gray;
+        }
+
+        &:hover {
+          text-decoration: none;
         }
       }
     }

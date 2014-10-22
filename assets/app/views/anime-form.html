@@ -3,11 +3,11 @@
     <input type="text"
            name="name"
            class="form-control"
-           ng-model="vm.anime.name"
-           validator="required">
+           ng-model="vm.anime.name">
 </div>
 <div class="form-group">
     <label>Rating</label>
+
     <div class="rating-container">
         <rating class="text-warning"
                 ng-model="vm.anime.rating"></rating>
@@ -19,6 +19,39 @@
               class="form-control"
               rows="3"
               ng-model="vm.anime.comment"></textarea>
+</div>
+<div class="form-group">
+    <label>Links</label>
+
+    <div ng-repeat="link in vm.anime.links track by $index"
+         ng-class="{'input-group-last':$last}"
+         class="links-mini-form">
+        <input type="text"
+               class="form-control input-top"
+               ng-model="link.name"
+               placeholder="Link name">
+
+        <div class="input-group">
+            <input type="text"
+                   class="form-control input-bottom"
+                   ng-model="link.url"
+                   placeholder="Link url">
+            <span class="input-group-btn">
+                <button ng-if="$first"
+                        class="btn btn-default"
+                        type="button"
+                        ng-click="vm.addLinkField()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+                <button ng-if="!$first"
+                        class="btn btn-default"
+                        type="button"
+                        ng-click="vm.removeLinkField($index)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+            </span>
+        </div>
+    </div>
 </div>
 <div class="form-group">
     <label>Tags</label>

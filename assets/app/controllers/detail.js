@@ -5,7 +5,6 @@
         .module('main')
         .controller('DetailController', DetailController);
 
-    //TODO: tags order
     function DetailController($routeParams, $location, $modal, $log, Anime, Tag) {
         var vm = this,
             savedAnime = {};

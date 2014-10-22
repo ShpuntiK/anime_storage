@@ -5,55 +5,81 @@ from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
 
-def get_tags_ids(tags):
-    tag_ids = []
+def save_tag(name):
+    new_tag = models.Tag(name=name)
+    new_tag.save()
+    return new_tag
+
+
+def get_tags(tags):
+    result = []
 
     for tag in tags:
         if 'id' in tag:
-            tag_ids.append(tag['id'])
+            result.append(tag['id'])
         else:
             try:
                 existed_tag = models.Tag.objects.get(name=tag['name'])
-                tag_ids.append(existed_tag.id)
+                result.append(existed_tag.id)
             except ObjectDoesNotExist:
-                new_tag = models.Tag(name=tag['name'])
-                new_tag.save()
-                tag_ids.append(new_tag.id)
+                new_tag = save_tag(tag['name'])
+                result.append(new_tag.id)
 
-    return tag_ids
+    return result
+
+
+def save_links(links, anime):
+    for link in links:
+        new_link = models.Link(name=link['name'], url=link['url'], anime=anime)
+        new_link.save()
+
+
+def update_links(links):
+    for link in links:
+        old_link = models.Link.objects.get(id=link['id'])
+
+        old_link.name = link['name']
+        old_link.url = link['url']
+        old_link.save()
 
 
 class AnimeListCreate(generics.ListCreateAPIView):
     queryset = models.Anime.objects.all()
-    serializer_class = serializers.AnimeSerializer
+    serializer_class = serializers.AnimeWithRelationshipsSerializer
 
     def create(self, request, *args, **kwargs):
         data = request.DATA
-        data['tags'] = get_tags_ids(data['tags'])
+        data['tags'] = get_tags(data['tags'])
 
-        serializer = self.get_serializer(data=data)
+        request_serializer = serializers.AnimeSerializer(data=data)
 
-        if serializer.is_valid():
-            self.pre_save(serializer.object)
-            self.object = serializer.save(force_insert=True)
+        if request_serializer.is_valid():
+            self.pre_save(request_serializer.object)
+            self.object = request_serializer.save(force_insert=True)
             self.post_save(self.object, created=True)
-            headers = self.get_success_headers(serializer.data)
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED,
+            save_links(data['links'], self.object)
+
+            headers = self.get_success_headers(request_serializer.data)
+
+            response_serializer = serializers.AnimeWithRelationshipsSerializer(self.object)
+
+            return Response(response_serializer.data, status=status.HTTP_201_CREATED,
                             headers=headers)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(request_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class AnimeRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Anime.objects.all()
-    serializer_class = serializers.AnimeWithTagSerializer
+    serializer_class = serializers.AnimeWithRelationshipsSerializer
 
     def update(self, request, *args, **kwargs):
         self.object = self.get_object_or_none()
 
         data = request.DATA
-        data['tags'] = get_tags_ids(data['tags'])
+        data['tags'] = get_tags(data['tags'])
+        update_links(data['links'])
 
         request_serializer = serializers.AnimeSerializer(self.object, data=data)
 
@@ -68,7 +94,7 @@ class AnimeRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
         self.object = request_serializer.save(force_update=True)
         self.post_save(self.object, created=False)
 
-        response_serializer = serializers.AnimeWithTagSerializer(self.object)
+        response_serializer = serializers.AnimeWithRelationshipsSerializer(self.object)
 
         return Response(response_serializer.data, status=status.HTTP_200_OK)
 
@@ -76,13 +102,3 @@ class AnimeRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 class TagList(generics.ListAPIView):
     queryset = models.Tag.objects.all()
     serializer_class = serializers.TagSerializer
-
-
-class LinkListCreate(generics.ListCreateAPIView):
-    queryset = models.Link.objects.all()
-    serializer_class = serializers.LinkSerializer
-
-
-class LinkRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Link.objects.all()
-    serializer_class = serializers.LinkSerializer

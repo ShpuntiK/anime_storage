@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Tag(models.Model):
-    name = models.SlugField(max_length=255, unique=True)
+    name = models.CharField(max_length=255, unique=True)
 
     def __unicode__(self):
         return self.name
@@ -22,9 +22,8 @@ class Anime(models.Model):
 
 class Link(models.Model):
     name = models.CharField(max_length=255)
-    description = models.TextField()
     url = models.URLField()
     anime = models.ForeignKey(Anime, related_name='links')
 
     def __unicode__(self):
-        return self.url
+        return self.name

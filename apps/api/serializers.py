@@ -12,8 +12,9 @@ class LinkSerializer(serializers.ModelSerializer):
         model = models.Link
 
 
-class AnimeWithTagSerializer(serializers.ModelSerializer):
+class AnimeWithRelationshipsSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True)
+    links = LinkSerializer(many=True)
 
     class Meta:
         model = models.Anime

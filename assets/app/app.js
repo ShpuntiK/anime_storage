@@ -19,7 +19,8 @@
         $httpProvider.interceptors.push('httpInterceptor');
 
         tagsInputConfigProvider.setDefaults('tagsInput', {
-            placeholder: ''
+            placeholder: '',
+            replaceSpacesWithDashes: false
         });
     }
 })();

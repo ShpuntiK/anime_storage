@@ -21,7 +21,13 @@
                 </h3>
             </div>
             <div class="panel-body">
-                <p>Comment: <strong>{{ vm.anime.comment }}</strong></p>
+                <p>
+                    <strong>Comment:</strong> {{ vm.anime.comment }}
+                </p>
+
+                <p ng-repeat="link in vm.anime.links">
+                    <strong>{{ link.name }}:</strong> {{ link.url }}
+                </p>
             </div>
         </div>
 
@@ -36,11 +42,13 @@
 
             <button type="submit"
                     class="btn btn-default"
-                    ng-click="vm.editAnime()">Edit</button>
+                    ng-click="vm.editAnime()">Edit
+            </button>
 
             <button type="button"
                     class="btn btn-default"
-                    ng-click="vm.toggleForm()">Cancel</button>
+                    ng-click="vm.toggleForm()">Cancel
+            </button>
         </form>
     </div>
 </div>
