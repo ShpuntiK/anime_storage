@@ -8,7 +8,7 @@ module.exports = function (grunt) {
         },
 
         jshint: {
-            options:{
+            options: {
                 jshintrc: '.jshintrc'
             },
             files: [
@@ -19,7 +19,10 @@ module.exports = function (grunt) {
 
         less: {
             options: {
-                paths: ['./assets/styles']
+                paths: ['./assets/styles'],
+                sourceMap: true,
+                sourceMapFilename: './static/css/main.css.map',
+                sourceMapURL: '/static/css/main.css.map'
             },
             files: {
                 expand: true,
