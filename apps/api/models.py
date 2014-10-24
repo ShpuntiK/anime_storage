@@ -15,6 +15,8 @@ class Anime(models.Model):
     comment = models.TextField(blank=True)
     rating = models.SmallIntegerField(choices=RATING_CHOICES)
     tags = models.ManyToManyField(Tag)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return self.name

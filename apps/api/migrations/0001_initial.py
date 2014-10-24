@@ -17,6 +17,8 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255)),
                 ('comment', models.TextField(blank=True)),
                 ('rating', models.SmallIntegerField(choices=[(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)])),
+                ('created_date', models.DateTimeField(auto_now_add=True)),
+                ('updated_date', models.DateTimeField(auto_now=True)),
             ],
             options={
             },
