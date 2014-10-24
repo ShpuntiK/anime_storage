@@ -53,6 +53,7 @@
 
             vm.anime.$update(function (anime) {
                 savedAnime = angular.copy(anime);
+
                 vm.alert = {
                     type: 'success',
                     msg: 'Anime was updated!'

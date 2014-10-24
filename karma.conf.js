@@ -8,6 +8,7 @@ module.exports = function (config) {
             './static/bower_components/angular-route/angular-route.js',
             './static/bower_components/angular-resource/angular-resource.js',
             './static/bower_components/angular-animate/angular-animate.js',
+            './static/bower_components/angular-messages/angular-messages.js',
             './static/bower_components/angular-bootstrap/ui-bootstrap.js',
             './static/bower_components/angular-loading-bar/build/loading-bar.js',
             './static/bower_components/ng-tags-input/ng-tags-input.js',

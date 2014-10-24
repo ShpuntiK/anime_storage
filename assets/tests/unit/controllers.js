@@ -49,46 +49,91 @@
             });
 
             describe('addAnime', function () {
+                var initAnime = {
+                    rating: 3,
+                    links: [{}]
+                }, form;
 
                 beforeEach(function () {
-                    expect(ctrl.anime).toEqual({});
+                    expect(ctrl.anime).toEqual(initAnime);
                     expect(ctrl.alert).toBeNull();
+
+                    form = {
+                        $valid: true,
+                        $setPristine: jasmine.createSpy('$setPristine'),
+                        $setUntouched: jasmine.createSpy('$setUntouched')
+                    };
                 });
 
-                it('success response', function () {
+                describe('form is valid', function () {
+
+                    it('success response', function () {
+                        var expectedResult = {
+                            name: 'test name',
+                            rating: 5,
+                            links: [{
+                                name: 'test link',
+                                url: 'http://test.com'
+                            }]
+                        };
+
+                        ctrl.anime = expectedResult;
+                        ctrl.addAnime(form);
+
+                        $httpBackend
+                            .expectPOST('api/anime', expectedResult)
+                            .respond(201, expectedResult);
+
+                        expect(ctrl.anime).toEqual(expectedResult);
+
+                        $httpBackend.flush();
+
+                        expect(form.$setPristine).toHaveBeenCalled();
+                        expect(form.$setUntouched).toHaveBeenCalled();
+                        expect(ctrl.anime).toEqual(initAnime);
+                        expect(ctrl.alert).not.toBeNull();
+                        expect(ctrl.alert.type).toEqual('success');
+                    });
+
+                    it('error response', function () {
+                        ctrl.addAnime(form);
+
+                        $httpBackend
+                            .expectPOST('api/anime')
+                            .respond(400, {detail: 'fail'});
+
+                        $httpBackend.flush();
+
+                        expect(form.$setPristine).not.toHaveBeenCalled();
+                        expect(form.$setUntouched).not.toHaveBeenCalled();
+                        expect(ctrl.anime).toEqual(initAnime);
+                        expect(ctrl.alert).not.toBeNull();
+                        expect(ctrl.alert.type).toEqual('danger');
+                    });
+
+                });
+
+                it('form is invalid', function () {
                     var expectedResult = {
                         name: 'test name',
-                        rating: 5
+                        rating: 5,
+                        links: [{
+                            name: 'test link',
+                            url: 'http://test.com'
+                        }]
                     };
 
+                    form.$valid = false;
+
                     ctrl.anime = expectedResult;
-                    ctrl.addAnime();
+                    ctrl.addAnime(form);
 
-                    $httpBackend
-                        .expectPOST('api/anime', expectedResult)
-                        .respond(201, expectedResult);
+                    $httpBackend.flush();
 
+                    expect(form.$setPristine).not.toHaveBeenCalled();
+                    expect(form.$setUntouched).not.toHaveBeenCalled();
                     expect(ctrl.anime).toEqual(expectedResult);
-
-                    $httpBackend.flush();
-
-                    expect(ctrl.anime).toEqual({});
-                    expect(ctrl.alert).not.toBeNull();
-                    expect(ctrl.alert.type).toEqual('success');
-                });
-
-                it('error response', function () {
-                    ctrl.addAnime();
-
-                    $httpBackend
-                        .expectPOST('api/anime')
-                        .respond(400, {detail: 'fail'});
-
-                    $httpBackend.flush();
-
-                    expect(ctrl.anime).toEqual({});
-                    expect(ctrl.alert).not.toBeNull();
-                    expect(ctrl.alert.type).toEqual('danger');
+                    expect(ctrl.alert).toBeNull();
                 });
 
             });
@@ -133,6 +178,27 @@
                 });
 
             });
+
+            describe('linkField', function(){
+
+                beforeEach(function(){
+                    expect(ctrl.anime.links).toEqual([{}]);
+                });
+
+                it('addLinkField', function(){
+                    ctrl.addLinkField();
+
+                    expect(ctrl.anime.links).toEqual([{}, {}]);
+                });
+
+                it('removeLinkField', function(){
+                    ctrl.removeLinkField();
+
+                    expect(ctrl.anime.links).toEqual([]);
+                });
+
+            });
+
         });
 
         describe('CatalogController', function () {
@@ -225,7 +291,14 @@
         });
 
         describe('DetailController', function () {
-            var animeFromResponse = {name: 'test', rating: 5},
+            var animeFromResponse = {
+                    name: 'test',
+                    rating: 5,
+                    links: [{
+                        name: 'test link 1',
+                        url: 'http://test1.com'
+                    }]
+                },
                 ctrl, $httpBackend, $location;
 
             beforeEach(inject(function (_$httpBackend_, _$location_, $controller) {
@@ -285,7 +358,13 @@
             describe('editAnime', function () {
                 var expectedResult = {
                     name: 'new name',
-                    rating: 1
+                    rating: 1,
+                    links: [{
+                        name: 'test link 2',
+                        url: 'http://test2.com'
+                    }]
+                }, form = {
+                    $valid: true
                 };
 
                 beforeEach(function () {
@@ -296,38 +375,52 @@
 
                     ctrl.anime.name = expectedResult.name;
                     ctrl.anime.rating = expectedResult.rating;
+                    ctrl.anime.links = expectedResult.links;
                 });
 
-                it('success response', function () {
-                    $httpBackend
-                        .expectPUT('api/anime', expectedResult)
-                        .respond(200, expectedResult);
+                describe('form is valid', function () {
 
-                    ctrl.editAnime();
+                    it('success response', function () {
+                        $httpBackend
+                            .expectPUT('api/anime', expectedResult)
+                            .respond(200, expectedResult);
 
-                    expect(ctrl.anime).toEqualData(expectedResult);
+                        ctrl.editAnime(form);
 
-                    $httpBackend.flush();
+                        expect(ctrl.anime).toEqualData(expectedResult);
 
-                    expect(ctrl.anime).toEqualData(expectedResult);
-                    expect(ctrl.alert).not.toBeNull();
-                    expect(ctrl.alert.type).toEqual('success');
+                        $httpBackend.flush();
+
+                        expect(ctrl.anime).toEqualData(expectedResult);
+                        expect(ctrl.alert).not.toBeNull();
+                        expect(ctrl.alert.type).toEqual('success');
+                    });
+
+                    it('error response', function () {
+                        $httpBackend
+                            .expectPUT('api/anime', expectedResult)
+                            .respond(400, {detail: 'fail'});
+
+                        ctrl.editAnime(form);
+
+                        expect(ctrl.anime).toEqualData(expectedResult);
+
+                        $httpBackend.flush();
+
+                        expect(ctrl.anime).toEqualData(expectedResult);
+                        expect(ctrl.alert).not.toBeNull();
+                        expect(ctrl.alert.type).toEqual('danger');
+                    });
                 });
 
-                it('error response', function () {
-                    $httpBackend
-                        .expectPUT('api/anime', expectedResult)
-                        .respond(400, {detail: 'fail'});
+                it('form is invalid', function () {
+                    form.$valid = false;
 
-                    ctrl.editAnime();
+                    ctrl.editAnime(form);
 
                     expect(ctrl.anime).toEqualData(expectedResult);
 
-                    $httpBackend.flush();
-
-                    expect(ctrl.anime).toEqualData(expectedResult);
-                    expect(ctrl.alert).not.toBeNull();
-                    expect(ctrl.alert.type).toEqual('danger');
+                    expect(ctrl.alert).toBeNull();
                 });
 
             });
@@ -402,6 +495,34 @@
                     var filteredTags = ctrl.filterTags('tag');
 
                     expect(filteredTags.$$state.value).toEqualData(expectedResult);
+                });
+
+            });
+
+            describe('linkField', function () {
+
+                beforeEach(function () {
+                    $httpBackend.flush();
+
+                    expect(ctrl.anime.links).toEqual([{
+                        name: 'test link 1',
+                        url: 'http://test1.com'
+                    }]);
+                });
+
+                it('addLinkField', function () {
+                    ctrl.addLinkField();
+
+                    expect(ctrl.anime.links).toEqual([{
+                        name: 'test link 1',
+                        url: 'http://test1.com'
+                    }, {}]);
+                });
+
+                it('removeLinkField', function () {
+                    ctrl.removeLinkField();
+
+                    expect(ctrl.anime.links).toEqual([]);
                 });
 
             });

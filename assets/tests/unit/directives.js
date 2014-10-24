@@ -53,5 +53,52 @@
 
         });
 
+        describe('field-validation', function () {
+            var formElement, inputElement, field;
+
+            beforeEach(inject(function (_$compile_, _$rootScope_) {
+                var $rootScope = _$rootScope_,
+                    formHtml = '<form name="testForm" novalidate>' +
+                        '<input type="url" name="testField" ng-model="testField" required field-validation>' +
+                        '<button type="submit">Submit</button></form>';
+
+                formElement = _$compile_(formHtml)($rootScope);
+                inputElement = formElement.find('input');
+
+                field = $rootScope.testForm.testField;
+
+                $rootScope.$digest();
+
+                expect(inputElement.hasClass('has-error')).toBeFalsy();
+            }));
+
+            describe('validate on touch event', function () {
+
+                it('valid', function () {
+                    field.$setViewValue('http://test.com');
+
+                    inputElement.triggerHandler('blur');
+
+                    expect(inputElement.hasClass('has-error')).toBeFalsy();
+                });
+
+                it('required not valid', function () {
+                    inputElement.triggerHandler('blur');
+
+                    expect(inputElement.hasClass('has-error')).toBeTruthy();
+                });
+
+                it('url not valid', function () {
+                    field.$setViewValue('test');
+
+                    inputElement.triggerHandler('blur');
+
+                    expect(inputElement.hasClass('has-error')).toBeTruthy();
+                });
+
+            });
+
+        });
+
     });
 })();
