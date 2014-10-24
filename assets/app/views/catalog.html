@@ -1,21 +1,36 @@
 <div class="row" ng-repeat="row in vm.animeRows">
     <div class="col-md-4" ng-repeat="anime in row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{ anime.name }}
+        <div class="anime-card">
+            <div class="anime-title">
+                <a class="text-uppercase"
+                   ng-href="/#/detail/{{ anime.id }}">
+                    {{ anime.name }}
+                </a>
+                <div class="rating pull-right">
                     <rating class="text-warning"
                             ng-model="anime.rating"
                             readonly="true"></rating>
-                    <a ng-href="/#/detail/{{ anime.id }}" class="pull-right"><i class="glyphicon glyphicon-share-alt"></i></a>
-                </h3>
+                </div>
             </div>
-            <div class="panel-body">
-                <p>
-                    <strong>Comment:</strong> {{ anime.comment }}
-                </p>
-                <p ng-repeat="link in anime.links">
-                    <strong>{{ link.name }}:</strong> {{ link.url }}
-                </p>
+
+            <div class="anime-content">
+                <p ng-show="anime.comment">{{ anime.comment }}</p>
+                <ul class="links list-inline">
+                    <li ng-repeat="link in anime.links">
+                        <a ng-href="{{ link.url }}"
+                           target="_blank">
+                            <span class="glyphicon glyphicon-link"></span>
+                            {{ link.name }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="anime-tags">
+                <span class="label label-default"
+                      ng-repeat="tag in anime.tags"
+                      ng-hide="!anime.tags.length">{{ tag.name }}</span>
+                <span class="text-muted"
+                      ng-show="!anime.tags.length">there are no tags</span>
             </div>
         </div>
     </div>
