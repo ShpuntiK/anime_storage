@@ -1,12 +1,20 @@
 <div class="form-group">
-    <label>Name</label>
+    <label class="control-label">Name</label>
     <input type="text"
            name="name"
            class="form-control"
-           ng-model="vm.anime.name">
+           ng-model="vm.anime.name"
+           required
+           field-validation>
+
+    <div class="help-block has-error"
+         ng-if="animeForm.$submitted || animeForm.name.$touched"
+         ng-messages="animeForm.name.$error">
+        <span ng-message="required">Anime name is required</span>
+    </div>
 </div>
 <div class="form-group">
-    <label>Rating</label>
+    <label class="control-label">Rating</label>
 
     <div class="rating-container">
         <rating class="text-warning"
@@ -14,28 +22,35 @@
     </div>
 </div>
 <div class="form-group">
-    <label>Comment</label>
+    <label class="control-label">Comment</label>
     <textarea name="comment"
               class="form-control"
               rows="3"
               ng-model="vm.anime.comment"></textarea>
 </div>
 <div class="form-group">
-    <label>Links</label>
+    <label class="control-label">Links</label>
 
     <div ng-repeat="link in vm.anime.links track by $index"
-         ng-class="{'input-group-last':$last}"
+         ng-form="links"
+         ng-class="{'links-mini-form-first':$first}"
          class="links-mini-form">
         <input type="text"
+               name="linkName"
                class="form-control input-top"
                ng-model="link.name"
-               placeholder="Link name">
+               placeholder="Link name"
+               required
+               field-validation>
 
         <div class="input-group">
-            <input type="text"
+            <input type="url"
+                   name="linkUrl"
                    class="form-control input-bottom"
                    ng-model="link.url"
-                   placeholder="Link url">
+                   placeholder="Link url"
+                   required
+                   field-validation>
             <span class="input-group-btn">
                 <button ng-if="$first"
                         class="btn btn-default"
@@ -51,10 +66,22 @@
                 </button>
             </span>
         </div>
+
+        <div class="help-block has-error"
+             ng-if="animeForm.$submitted || links.linkName.$touched"
+             ng-messages="links.linkName.$error">
+            <span ng-message="required">Link name is required</span>
+        </div>
+        <div class="help-block has-error"
+             ng-if="animeForm.$submitted || links.linkUrl.$touched"
+             ng-messages="links.linkUrl.$error">
+            <span ng-message="required">Link url is required</span>
+            <span ng-message="url">Invalid url</span>
+        </div>
     </div>
 </div>
 <div class="form-group">
-    <label>Tags</label>
+    <label class="control-label">Tags</label>
     <tags-input name="tags"
                 ng-model="vm.anime.tags"
                 display-property="name">

@@ -19,6 +19,8 @@
         vm.filterTags = filterTags;
         vm.hideAlert = hideAlert;
         vm.toggleForm = toggleForm;
+        vm.addLinkField = addLinkField;
+        vm.removeLinkField = removeLinkField;
 
         getAnime();
 
@@ -36,7 +38,19 @@
             return Tag.autocomplete(vm.existedTags, query);
         }
 
-        function editAnime() {
+        function addLinkField() {
+            vm.anime.links.push({});
+        }
+
+        function removeLinkField(index) {
+            vm.anime.links.splice(index, 1);
+        }
+
+        function editAnime(animeForm) {
+            if (!animeForm.$valid) {
+                return;
+            }
+
             vm.anime.$update(function (anime) {
                 savedAnime = angular.copy(anime);
                 vm.alert = {

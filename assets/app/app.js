@@ -6,6 +6,7 @@
             'ngRoute',
             'ngResource',
             'ngAnimate',
+            'ngMessages',
             'ui.bootstrap',
             'angular-loading-bar',
             'ngTagsInput'

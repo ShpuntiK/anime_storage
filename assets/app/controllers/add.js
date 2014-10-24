@@ -7,12 +7,8 @@
 
     function AddController(Anime, Tag) {
         var vm = this;
-        vm.existedTags = Tag.resource.query();
-        vm.anime = {
-            links: [
-                {name: null, url: null}
-            ]
-        };
+        vm.existedTags = [];
+        vm.anime = {};
         vm.alert = null;
         vm.addAnime = addAnime;
         vm.addLinkField = addLinkField;
@@ -20,26 +16,41 @@
         vm.hideAlert = hideAlert;
         vm.filterTags = filterTags;
 
+        init();
+
+        function init() {
+            vm.anime = {
+                rating: 3,
+                links: [{}]
+            };
+
+            vm.existedTags = Tag.resource.query();
+        }
+
         function hideAlert() {
             vm.alert = null;
         }
 
         function addLinkField() {
-            vm.anime.links.push({name: null, url: null});
+            vm.anime.links.push({});
         }
 
         function removeLinkField(index) {
             vm.anime.links.splice(index, 1);
         }
 
-        function addAnime() {
+        function addAnime(animeForm) {
             var newAnime = new Anime(vm.anime);
 
+            if (!animeForm.$valid) {
+                return;
+            }
+
             newAnime.$save(function (res) {
-                vm.anime = {
-                    links: [{name: null, url: null}]
-                };
-                vm.existedTags = Tag.resource.query();
+                init();
+
+                animeForm.$setPristine();
+                animeForm.$setUntouched();
 
                 vm.alert = {
                     type: 'success',

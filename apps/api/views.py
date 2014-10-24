@@ -28,19 +28,16 @@ def get_tags(tags):
     return result
 
 
+def delete_links(anime):
+    models.Link.objects.filter(anime=anime).delete()
+
+
 def save_links(links, anime):
+    delete_links(anime)
+
     for link in links:
         new_link = models.Link(name=link['name'], url=link['url'], anime=anime)
         new_link.save()
-
-
-def update_links(links):
-    for link in links:
-        old_link = models.Link.objects.get(id=link['id'])
-
-        old_link.name = link['name']
-        old_link.url = link['url']
-        old_link.save()
 
 
 class AnimeListCreate(generics.ListCreateAPIView):
@@ -79,7 +76,7 @@ class AnimeRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 
         data = request.DATA
         data['tags'] = get_tags(data['tags'])
-        update_links(data['links'])
+        save_links(data['links'], self.object)
 
         request_serializer = serializers.AnimeSerializer(self.object, data=data)
 

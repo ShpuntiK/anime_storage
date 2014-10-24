@@ -6,20 +6,16 @@
 
 @icon-font-path: "../../../static/bower_components/bootstrap/fonts/";
 
-:focus {
-  outline: none !important;
-}
-
-.ng-invalid.ng-dirty {
-  .has-error .form-control;
-}
-
-label.has-error.control-label {
-  .has-error .control-label;
-}
-
 .btn:focus, .btn:active:focus, .btn.active:focus {
   outline: none;
+}
+
+.form-control.has-error {
+  border: 2px solid @brand-danger;
+}
+
+.help-block.has-error {
+  color: @brand-danger;
 }
 
 textarea {
@@ -38,19 +34,13 @@ textarea {
   height: 20px;
 }
 
-.rating-container {
-  font-size: 22px;
-}
-
-.input-group {
-  margin-bottom: 20px;
-}
-
-.input-group-last {
-  margin-bottom: 0;
+.links-mini-form:first-of-type {
+  margin-top: 0;
 }
 
 .links-mini-form {
+  margin-top: 20px;
+
   .input-top {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
@@ -66,6 +56,15 @@ textarea {
   }
 }
 
+.rating-container {
+  font-size: 22px;
+
+  span {
+    &:focus {
+      outline: none;
+    }
+  }
+}
 tags-input {
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
