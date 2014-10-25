@@ -23,7 +23,7 @@
         "karma-jasmine": "~0.2.2"
     },
     "scripts": {
-        "postinstall": "bower i",
+        "postinstall": "bower i && grunt build",
         "test": "grunt karma"
     }
 }

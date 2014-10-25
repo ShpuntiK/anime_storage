@@ -1,1 +1,1 @@
-web: gunicorn anime_storage.wsgi
+web: python manage.py run_gunicorn -b 0.0.0.0:\$PORT -w 9 --max-requests 250 --preload

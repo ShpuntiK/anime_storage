@@ -71,5 +71,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ng-annotate');
 
-    grunt.registerTask('build', ['less', 'jshint', 'karma', 'ngAnnotate', 'copy']);
+    grunt.registerTask('build', ['less', 'ngAnnotate', 'copy']);
 };
