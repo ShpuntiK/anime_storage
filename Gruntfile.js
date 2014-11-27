@@ -42,6 +42,24 @@ module.exports = function (grunt) {
             }
         },
 
+        compress: {
+            options: {
+                archive: 'deploy.zip'
+            },
+            files: {
+                expand: true,
+                cwd: './',
+                src: ['./anime_storage/**/*.py',
+                    './apps/**/*.py',
+                    './static/**/*',
+                    './templates/**/*',
+                    './configs/**/*',
+                    'manage.py',
+                    'requirements.txt'
+                ]
+            }
+        },
+
         karma: {
             unit: {
                 options: {
@@ -68,8 +86,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ng-annotate');
 
     grunt.registerTask('build', ['less', 'ngAnnotate', 'copy']);
+    grunt.registerTask('zip', ['build', 'compress']);
 };
