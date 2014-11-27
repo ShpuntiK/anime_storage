@@ -1,6 +1,6 @@
 from base import *
 
-if os.environ.get('APP_ENV') == 'production':
+if os.environ.get('DJANGO_ENV') == 'production':
     try:
         from production import *
     except ImportError, exception:
