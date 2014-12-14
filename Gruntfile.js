@@ -3,8 +3,8 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
-            files: ['./assets/app/**/*', './assets/styles/**/*'],
-            tasks: ['less', 'copy', 'ngAnnotate']
+            files: ['./static/scripts/**/*', './static/styles/**/*'],
+            tasks: ['newer:less', 'newer:ngAnnotate']
         },
 
         jshint: {
@@ -12,33 +12,36 @@ module.exports = function (grunt) {
                 jshintrc: '.jshintrc'
             },
             files: [
-                './assets/app/**/*.js',
-                './assets/tests/unit/**/*.js'
+                './static/scripts/**/*.js',
+                './tests/client/unit/**/*.js'
             ]
         },
 
         less: {
             options: {
-                paths: ['./assets/styles'],
+                paths: ['./static/styles'],
                 sourceMap: true,
-                sourceMapFilename: './static/css/main.css.map',
-                sourceMapURL: '/static/css/main.css.map'
+                sourceMapFilename: './static/_/css/main.css.map',
+                sourceMapURL: '/static/_/css/main.css.map'
             },
             files: {
                 expand: true,
-                cwd: './assets/styles',
+                cwd: './static/styles',
                 src: ['main.less'],
-                dest: './static/css',
+                dest: './static/_/css',
                 ext: '.css'
             }
         },
 
-        copy: {
+        ngAnnotate: {
+            options: {
+                singleQuotes: true
+            },
             files: {
                 expand: true,
-                cwd: './assets/app/views',
-                src: '**/*',
-                dest: './static/js/app/views'
+                cwd: './static/scripts',
+                src: ['**/*.js'],
+                dest: './static/_/js'
             }
         },
 
@@ -67,29 +70,17 @@ module.exports = function (grunt) {
                     singleRun: true
                 }
             }
-        },
-
-        ngAnnotate: {
-            options: {
-                singleQuotes: true
-            },
-            files: {
-                expand: true,
-                cwd: './assets/app',
-                src: ['**/*.js'],
-                dest: './static/js/app'
-            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ng-annotate');
+    grunt.loadNpmTasks('grunt-newer');
 
-    grunt.registerTask('build', ['less', 'ngAnnotate', 'copy']);
+    grunt.registerTask('build', ['less', 'jshint', 'ngAnnotate']);
     grunt.registerTask('zip', ['build', 'compress']);
 };

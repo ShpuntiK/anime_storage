@@ -8,17 +8,17 @@
     function router($routeProvider) {
         $routeProvider
             .when('/catalog', {
-                templateUrl: 'static/js/app/views/catalog.html',
+                templateUrl: 'static/scripts/views/catalog.html',
                 controller: 'CatalogController',
                 controllerAs: 'vm'
             })
             .when('/add', {
-                templateUrl: 'static/js/app/views/add.html',
+                templateUrl: 'static/scripts/views/add.html',
                 controller: 'AddController',
                 controllerAs: 'vm'
             })
             .when('/detail/:animeId', {
-                templateUrl: 'static/js/app/views/detail.html',
+                templateUrl: 'static/scripts/views/detail.html',
                 controller: 'DetailController',
                 controllerAs: 'vm'
             })

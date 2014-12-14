@@ -3,26 +3,26 @@ module.exports = function (config) {
         basePath: '',
         frameworks: ['jasmine'],
         files: [
-            './static/bower_components/angular/angular.js',
-            './static/bower_components/angular-mocks/angular-mocks.js',
-            './static/bower_components/angular-route/angular-route.js',
-            './static/bower_components/angular-resource/angular-resource.js',
-            './static/bower_components/angular-animate/angular-animate.js',
-            './static/bower_components/angular-messages/angular-messages.js',
-            './static/bower_components/angular-bootstrap/ui-bootstrap.js',
-            './static/bower_components/angular-loading-bar/build/loading-bar.js',
-            './static/bower_components/ng-tags-input/ng-tags-input.js',
-            './assets/app/**/*.js',
-            './assets/tests/unit/**/*.js'
+            './static/_/bower_components/angular/angular.js',
+            './static/_/bower_components/angular-mocks/angular-mocks.js',
+            './static/_/bower_components/angular-route/angular-route.js',
+            './static/_/bower_components/angular-resource/angular-resource.js',
+            './static/_/bower_components/angular-animate/angular-animate.js',
+            './static/_/bower_components/angular-messages/angular-messages.js',
+            './static/_/bower_components/angular-bootstrap/ui-bootstrap.js',
+            './static/_/bower_components/angular-loading-bar/build/loading-bar.js',
+            './static/_/bower_components/ng-tags-input/ng-tags-input.js',
+            './static/scripts/**/*.js',
+            './tests/client/unit/**/*.js'
         ],
         exclude: [],
         preprocessors: {
-            './assets/app/**/*.js': 'coverage'
+            './static/scripts/**/*.js': 'coverage'
         },
         reporters: ['progress', 'coverage'],
         coverageReporter: {
             type: 'html',
-            dir: './assets/tests/coverage'
+            dir: './tests/client/coverage'
         },
         port: 9876,
         colors: true,
