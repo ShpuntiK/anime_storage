@@ -3,5 +3,5 @@
 *.css
 .idea/
 node_modules/
-static/
-assets/tests/coverage/
+static/_
+tests/client/coverage/
