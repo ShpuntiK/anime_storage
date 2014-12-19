@@ -1,6 +1,7 @@
 *.sqlite3
 *.pyc
 *.css
+*.zip
 .idea/
 node_modules/
 bower_components/
