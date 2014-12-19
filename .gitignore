@@ -3,5 +3,6 @@
 *.css
 .idea/
 node_modules/
-static/_
+bower_components/
 tests/client/coverage/
+dist/

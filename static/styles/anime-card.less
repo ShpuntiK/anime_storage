@@ -1,0 +1,57 @@
+.anime-card {
+    background: #fff;
+    box-shadow: 0 3px 5px #ccc;
+
+    .anime-title {
+        background-color: @brand-primary;
+        font-size: 18px;
+        padding: 3px 7px;
+        box-shadow: 0 2px 4px #777;
+
+        a {
+            text-decoration: none;
+            color: #fff;
+
+            &:hover {
+                color: @brand-success;
+            }
+        }
+
+        .rating {
+            cursor: default;
+            font-size: 18px;
+            margin-top: 2px;
+
+            span {
+                outline: none;
+            }
+        }
+    }
+
+    .anime-content {
+        padding: 15px;
+
+        .links {
+            margin-bottom: 0;
+
+            a {
+                color: @brand-info;
+
+                &:hover {
+                    color: @brand-success;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    .anime-tags {
+        border-top: 1px solid #e0e0e0;
+        padding: 7px;
+
+        .label {
+            font-size: 14px;
+            margin-right: 5px;
+        }
+    }
+}

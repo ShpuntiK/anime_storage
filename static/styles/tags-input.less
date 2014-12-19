@@ -1,0 +1,63 @@
+@import "../bower_components/ng-tags-input/ng-tags-input.css";
+
+tags-input {
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    .tags {
+        .form-control;
+
+        font-size: 24px;
+        padding: 2px;
+        height: 100%;
+
+        .tag-item {
+            .label;
+            .label-info;
+
+            background: @brand-info;
+            height: auto;
+            border: none;
+            line-height: 25px;
+            margin: 2px;
+
+            .remove-button {
+                color: #fff;
+
+                &:active {
+                    color: @gray;
+                }
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        .tag-item.selected {
+            background: @brand-warning;
+            color: #fff;
+            border: none;
+        }
+
+        .input {
+            font-size: 18px;
+            margin: 4px;
+            width: 6px;
+        }
+
+        .input.invalid-tag {
+            color: @brand-danger;
+        }
+    }
+
+    .tags.focused {
+        border: 2px solid @brand-primary;
+        box-shadow: none;
+    }
+}
+
+tags-input.ng-invalid {
+    .tags {
+        box-shadow: none;
+    }
+}
