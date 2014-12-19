@@ -1,38 +1,42 @@
 {% extends 'base.html' %}
 
-{% load staticfiles %}
-
 {% block styles %}
-    <link rel="stylesheet" href="{% static "_/css/main.css" %}"/>
+    <!-- build:css /static/styles/main.css -->
+    <link rel="stylesheet" href="/static/styles/main.css"/>
+    <!-- endbuild -->
 {% endblock %}
 
 {% block scripts %}
-    <script src="{% static "_/bower_components/angular/angular.js" %}"></script>
-    <script src="{% static "_/bower_components/angular-route/angular-route.js" %}"></script>
-    <script src="{% static "_/bower_components/angular-resource/angular-resource.js" %}"></script>
-    <script src="{% static "_/bower_components/angular-animate/angular-animate.js" %}"></script>
-    <script src="{% static "_/bower_components/angular-messages/angular-messages.js" %}"></script>
-    <script src="{% static "_/bower_components/angular-bootstrap/ui-bootstrap.js" %}"></script>
-    <script src="{% static "_/bower_components/angular-bootstrap/ui-bootstrap-tpls.js" %}"></script>
-    <script src="{% static "_/bower_components/angular-loading-bar/build/loading-bar.js" %}"></script>
-    <script src="{% static "_/bower_components/ng-tags-input/ng-tags-input.js" %}"></script>
+    <!-- build:js /static/scripts/vendor.js -->
+    <script src="/static/bower_components/angular/angular.js"></script>
+    <script src="/static/bower_components/angular-route/angular-route.js"></script>
+    <script src="/static/bower_components/angular-resource/angular-resource.js"></script>
+    <script src="/static/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/static/bower_components/angular-messages/angular-messages.js"></script>
+    <script src="/static/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="/static/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="/static/bower_components/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="/static/bower_components/ng-tags-input/ng-tags-input.js"></script>
+    <!-- endbuild -->
 
-    <script src="{% static "_/js/app.js" %}"></script>
-    <script src="{% static "_/js/router.js" %}"></script>
+    <!-- build:js /static/scripts/app.js -->
+    <script src="/static/scripts/app.js"></script>
+    <script src="/static/scripts/router.js"></script>
 
-    <script src="{% static "_/js/services/http-interceptor.js" %}"></script>
-    <script src="{% static "_/js/services/anime.js" %}"></script>
-    <script src="{% static "_/js/services/tag.js" %}"></script>
+    <script src="/static/scripts/services/http-interceptor.js"></script>
+    <script src="/static/scripts/services/anime.js"></script>
+    <script src="/static/scripts/services/tag.js"></script>
 
-    <script src="{% static "_/js/directives/navbar-active.js" %}"></script>
-    <script src="{% static "_/js/directives/field-validation.js" %}"></script>
+    <script src="/static/scripts/directives/navbar-active.js"></script>
+    <script src="/static/scripts/directives/field-validation.js"></script>
 
-    <script src="{% static "_/js/filters/range.js" %}"></script>
+    <script src="/static/scripts/filters/range.js"></script>
 
-    <script src="{% static "_/js/controllers/modal.js" %}"></script>
-    <script src="{% static "_/js/controllers/catalog.js" %}"></script>
-    <script src="{% static "_/js/controllers/detail.js" %}"></script>
-    <script src="{% static "_/js/controllers/add.js" %}"></script>
+    <script src="/static/scripts/controllers/modal.js"></script>
+    <script src="/static/scripts/controllers/catalog.js"></script>
+    <script src="/static/scripts/controllers/detail.js"></script>
+    <script src="/static/scripts/controllers/add.js"></script>
+    <!-- endbuild -->
 {% endblock %}
 
 {% block content %}
