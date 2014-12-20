@@ -50,6 +50,24 @@ module.exports = function (grunt) {
             }
         },
 
+        ngtemplates: {
+            files: {
+                src: 'static/scripts/views/**/*.html',
+                dest: '.tmp/concat/static/scripts/templates.js',
+                options: {
+                    usemin: '/static/scripts/app.js',
+                    module: 'main',
+                    htmlmin: {
+                        collapseWhitespace: true,
+                        collapseBooleanAttributes: true
+                    },
+                    url: function (url) {
+                        return '/' + url;
+                    }
+                }
+            }
+        },
+
         useminPrepare: {
             html: ['dist/templates/index.html'],
             options: {
@@ -68,6 +86,7 @@ module.exports = function (grunt) {
             files: {
                 src: [
                     'dist/static/scripts/*.js',
+                    '!dist/static/scripts/templates.js',
                     'dist/static/styles/main.css'
                 ]
             }
@@ -87,9 +106,10 @@ module.exports = function (grunt) {
                         'anime_storage/**/*.py',
                         'apps/**/*.py',
                         'templates/**/*',
-                        'configs/**/*',
-                        'manage.py',
-                        'requirements.txt'
+                        'static/bower_components/bootstrap/fonts/**/*'
+//                        'configs/**/*',
+//                        'manage.py',
+//                        'requirements.txt'
                     ],
                     dest: 'dist'
                 }]
@@ -107,12 +127,12 @@ module.exports = function (grunt) {
 
         compress: {
             options: {
-                archive: 'deploy.zip'
+                archive: 'dist.zip'
             },
             files: {
                 expand: true,
-                cwd: '',
-                src: ['dist']
+                cwd: 'dist',
+                src: ['**/*']
             }
         }
     });
@@ -132,6 +152,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-newer');
     grunt.loadNpmTasks('grunt-usemin');
     grunt.loadNpmTasks('grunt-autoprefixer');
+    grunt.loadNpmTasks('grunt-angular-templates');
 
 
     grunt.registerTask('build', [
@@ -141,13 +162,13 @@ module.exports = function (grunt) {
         'autoprefixer',
         'copy',
         'useminPrepare',
+        'ngtemplates',
         'concat',
         'ngAnnotate',
         'uglify',
         'cssmin',
         'filerev',
         'usemin',
-        //'ngtemplate',
         'clean:tmp'
     ]);
     grunt.registerTask('zip', ['build', 'compress']);

@@ -78,7 +78,7 @@
         function deleteAnime() {
             vm.deleteAnimeModal = $modal
                 .open({
-                    templateUrl: 'static/js/app/views/modals/delete.html',
+                    templateUrl: '/static/scripts/views/modals/delete.html',
                     controller: 'ModalController',
                     controllerAs: 'vm',
                     size: 'sm'
