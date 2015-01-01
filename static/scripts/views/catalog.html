@@ -6,6 +6,7 @@
                    ng-href="/#/detail/{{ anime.id }}">
                     {{ anime.name }}
                 </a>
+
                 <div class="rating pull-right">
                     <rating class="text-warning"
                             ng-model="anime.rating"
@@ -25,12 +26,10 @@
                     </li>
                 </ul>
             </div>
-            <div class="anime-tags">
+            <div class="anime-tags"
+                 ng-hide="!anime.tags.length">
                 <span class="label label-default"
-                      ng-repeat="tag in anime.tags"
-                      ng-hide="!anime.tags.length">{{ tag.name }}</span>
-                <span class="text-muted"
-                      ng-show="!anime.tags.length">there are no tags</span>
+                      ng-repeat="tag in anime.tags">{{ tag.name }}</span>
             </div>
         </div>
     </div>
