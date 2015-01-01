@@ -14,6 +14,7 @@ class Anime(models.Model):
     name = models.CharField(max_length=255)
     comment = models.TextField(blank=True)
     rating = models.SmallIntegerField(choices=RATING_CHOICES)
+    year = models.IntegerField(null=True)
     tags = models.ManyToManyField(Tag)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)

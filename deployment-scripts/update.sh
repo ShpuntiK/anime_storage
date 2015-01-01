@@ -17,8 +17,10 @@ if [ -d "templates" ]; then
 fi
 
 unzip dist.zip
-
 rm dist.zip
+
+source venv/bin/activate
+./manage.py migrate
 
 supervisorctl restart anime_storage
 

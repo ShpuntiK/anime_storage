@@ -104,6 +104,7 @@ module.exports = function (grunt) {
                     cwd: '.',
                     src: [
                         'anime_storage/**/*.py',
+                        '!anime_storage/**/development.py',
                         'apps/**/*.py',
                         'templates/**/*',
                         'static/bower_components/bootstrap/fonts/**/*'
