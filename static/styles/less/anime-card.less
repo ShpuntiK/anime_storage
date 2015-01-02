@@ -1,12 +1,14 @@
 .anime-list {
-    &__row {
-        margin-bottom: 20px;
-    }
+    column-count: 3;
 }
 
 .anime-card {
     background: #fff;
     box-shadow: 0 3px 5px #ccc;
+    margin-bottom: 25px;
+    display: inline-block;
+    width: 100%;
+
 
     &__title {
         display: block;
@@ -23,56 +25,62 @@
 
     }
 
-    .anime-content {
+    &__content {
         font-size: 18px;
         padding: 15px;
+    }
 
-        &__links {
-            margin-bottom: 0;
+    &__tags {
+        border-top: 1px solid #e0e0e0;
+        padding: 10px;
+    }
+}
 
-            a {
-                color: @brand-info;
+.anime-content {
+    &__links {
+        margin-bottom: 0;
+    }
 
-                &:hover {
-                    color: @brand-success;
-                    text-decoration: none;
-                }
-            }
-        }
+    &__label {
+        font-weight: bold;
+        padding: 0;
+    }
 
-        &__label {
-            font-weight: bold;
-            padding: 0;
-        }
+    &__rating {
+        font-size: 20px;
+        margin-top: -2px;
+        cursor: default;
 
-        &__rating {
-            font-size: 20px;
-            margin-top: -2px;
-            cursor: default;
-
-            span {
-                outline: none;
-            }
-        }
-
-        .form-group {
-            &_last {
-                margin-bottom: 0;
-            }
-        }
-
-        &__comment {
-            margin-top: 15px;
+        span {
+            outline: none;
         }
     }
 
-    .anime-tags {
-        border-top: 1px solid #e0e0e0;
-        padding: 10px;
-
-        .label {
-            font-size: 16px;
-            margin-right: 5px;
+    .form-group {
+        &_last {
+            margin-bottom: 0;
         }
+    }
+
+    &__comment {
+        margin-top: 15px;
+    }
+}
+
+.anime-links {
+    &__item {
+        color: @brand-info;
+
+        &:hover {
+            color: @brand-success;
+            text-decoration: none;
+        }
+    }
+}
+
+.anime-tags {
+    &__item {
+        font-size: 16px;
+        margin-right: 5px;
     }
 }
