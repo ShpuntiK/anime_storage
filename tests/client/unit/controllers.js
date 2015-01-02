@@ -216,7 +216,7 @@
             describe('getAnimes', function () {
 
                 beforeEach(function () {
-                    expect(ctrl.animeRows).toEqual([]);
+                    expect(ctrl.animes).toEqual([]);
                 });
 
                 it('with empty array', function () {
@@ -226,7 +226,7 @@
 
                     $httpBackend.flush();
 
-                    expect(ctrl.animeRows).toEqual([]);
+                    expect(ctrl.animes).toEqual([]);
                 });
 
                 it('with one element', function () {
@@ -240,23 +240,7 @@
 
                     $httpBackend.flush();
 
-                    expect(ctrl.animeRows).toEqualData([expectedResult]);
-                });
-
-                it('with three elements', function () {
-                    var expectedResult = [
-                        {name: 'anime1'},
-                        {name: 'anime2'},
-                        {name: 'anime3'}
-                    ];
-
-                    $httpBackend
-                        .expectGET('api/anime')
-                        .respond(expectedResult);
-
-                    $httpBackend.flush();
-
-                    expect(ctrl.animeRows).toEqualData([expectedResult]);
+                    expect(ctrl.animes).toEqualData(expectedResult);
                 });
 
                 it('with five elements', function () {
@@ -274,17 +258,7 @@
 
                     $httpBackend.flush();
 
-                    expect(ctrl.animeRows).toEqualData([
-                        [
-                            expectedResult[0],
-                            expectedResult[1],
-                            expectedResult[2]
-                        ],
-                        [
-                            expectedResult[3],
-                            expectedResult[4]
-                        ]
-                    ]);
+                    expect(ctrl.animes).toEqualData(expectedResult);
                 });
 
             });
