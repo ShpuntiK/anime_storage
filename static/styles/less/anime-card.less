@@ -8,30 +8,19 @@
     background: #fff;
     box-shadow: 0 3px 5px #ccc;
 
-    .anime-title {
+    &__title {
+        display: block;
         background-color: @brand-primary;
         font-size: 22px;
         padding: 3px 7px;
         box-shadow: 0 2px 4px #777;
+        color: #fff;
 
-        a {
+        &:hover {
             text-decoration: none;
-            color: #fff;
-
-            &:hover {
-                color: @brand-success;
-            }
+            color: @brand-success;
         }
 
-        .rating {
-            cursor: default;
-            font-size: 18px;
-            margin-top: 2px;
-
-            span {
-                outline: none;
-            }
-        }
     }
 
     .anime-content {
@@ -59,12 +48,21 @@
         &__rating {
             font-size: 20px;
             margin-top: -2px;
+            cursor: default;
+
+            span {
+                outline: none;
+            }
         }
 
         .form-group {
-            &:last-of-type {
+            &_last {
                 margin-bottom: 0;
             }
+        }
+
+        &__comment {
+            margin-top: 15px;
         }
     }
 
