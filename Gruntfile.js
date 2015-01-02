@@ -3,8 +3,8 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
-            files: ['static/styles/**/*'],
-            tasks: ['newer:less']
+            files: ['static/styles/**/*.less'],
+            tasks: ['less']
         },
 
         less: {
@@ -58,8 +58,7 @@ module.exports = function (grunt) {
                     usemin: '/static/scripts/app.js',
                     module: 'main',
                     htmlmin: {
-                        collapseWhitespace: true,
-                        collapseBooleanAttributes: true
+                        collapseWhitespace: true
                     },
                     url: function (url) {
                         return '/' + url;
@@ -150,7 +149,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-filerev');
-    grunt.loadNpmTasks('grunt-newer');
     grunt.loadNpmTasks('grunt-usemin');
     grunt.loadNpmTasks('grunt-autoprefixer');
     grunt.loadNpmTasks('grunt-angular-templates');
