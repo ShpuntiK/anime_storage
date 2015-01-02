@@ -3,8 +3,14 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
-            files: ['static/styles/**/*.less'],
-            tasks: ['less']
+            files: [
+                'static/styles/**/*.less',
+                'static/styles/main.css'
+            ],
+            tasks: [
+                'less',
+                'autoprefixer'
+            ]
         },
 
         less: {
