@@ -6,25 +6,36 @@
                    ng-href="/#/detail/{{ anime.id }}">
                     {{ anime.name }}
                 </a>
-
-                <div class="rating pull-right">
-                    <rating class="text-warning"
-                            ng-model="anime.rating"
-                            readonly="true"></rating>
-                </div>
             </div>
 
             <div class="anime-content">
-                <p ng-show="anime.comment">{{ anime.comment }}</p>
-                <ul class="links list-inline">
-                    <li ng-repeat="link in anime.links">
-                        <a ng-href="{{ link.url }}"
-                           target="_blank">
-                            <span class="glyphicon glyphicon-link"></span>
-                            {{ link.name }}
-                        </a>
-                    </li>
-                </ul>
+                <div class="form-group">
+                    <div class="col-sm-2 anime-content__label">Rating</div>
+                    <div class="col-sm-10 anime-content__rating">
+                        <rating class="text-warning"
+                                ng-model="anime.rating"
+                                readonly="true"></rating>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2 anime-content__label">Year</div>
+                    <div class="col-sm-10">{{ anime.year }}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2 anime-content__label">Links</div>
+                    <div class="col-sm-10">
+                        <ul class="anime-content__links list-inline">
+                            <li ng-repeat="link in anime.links">
+                                <a ng-href="{{ link.url }}"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-link"></span>
+                                    {{ link.name }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div>{{ anime.comment }}</div>
             </div>
             <div class="anime-tags"
                  ng-hide="!anime.tags.length">

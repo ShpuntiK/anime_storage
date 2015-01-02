@@ -10,7 +10,7 @@
 
     .anime-title {
         background-color: @brand-primary;
-        font-size: 18px;
+        font-size: 22px;
         padding: 3px 7px;
         box-shadow: 0 2px 4px #777;
 
@@ -35,9 +35,10 @@
     }
 
     .anime-content {
+        font-size: 18px;
         padding: 15px;
 
-        .links {
+        &__links {
             margin-bottom: 0;
 
             a {
@@ -49,14 +50,30 @@
                 }
             }
         }
+
+        &__label {
+            font-weight: bold;
+            padding: 0;
+        }
+
+        &__rating {
+            font-size: 20px;
+            margin-top: -2px;
+        }
+
+        .form-group {
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+        }
     }
 
     .anime-tags {
         border-top: 1px solid #e0e0e0;
-        padding: 7px;
+        padding: 10px;
 
         .label {
-            font-size: 14px;
+            font-size: 16px;
             margin-right: 5px;
         }
     }
