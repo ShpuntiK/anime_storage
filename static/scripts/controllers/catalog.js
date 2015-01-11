@@ -8,6 +8,8 @@
     function CatalogController($log, Anime) {
         var vm = this;
         vm.animes = [];
+        vm.search = {};
+        vm.cancelFilter = cancelFilter;
 
         getAnimes();
 
@@ -17,6 +19,10 @@
             }, function (err) {
                 $log.error(err);
             });
+        }
+
+        function cancelFilter() {
+            vm.search = {};
         }
     }
 })();

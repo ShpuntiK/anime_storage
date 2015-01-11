@@ -1,0 +1,56 @@
+<form class="form-horizontal well clearfix"
+      name="filterForm">
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Name</label>
+
+        <div class="col-md-4">
+            <input type="text"
+                   name="name"
+                   class="form-control"
+                   ng-model="vm.search.name">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Rating</label>
+
+        <div class="rating-container col-md-4">
+            <rating class="text-warning"
+                    ng-model="vm.search.rating"></rating>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">From year</label>
+
+        <div class="col-md-4">
+            <select name="yearFrom"
+                    class="form-control"
+                    ng-model="vm.search.yearFrom"
+                    ng-options="year for year in [] | range:1985:2016">
+                <option value="year">{{ year }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group form-group_last">
+        <label class="control-label col-md-2">To year</label>
+
+        <div class="col-md-4">
+            <select name="yearTo"
+                    class="form-control"
+                    ng-model="vm.search.yearTo"
+                    ng-options="year for year in [] | range:1985:2016">
+                <option value="year">{{ year }}</option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <button type="button"
+                    class="btn btn-default"
+                    ng-click="vm.cancelFilter()">Cancel
+            </button>
+        </div>
+    </div>
+</form>
